@@ -2,6 +2,7 @@ package com.food.ordering.orderapplicationservice.mapper
 
 import com.food.ordering.commondomain.valueobject.*
 import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
+import com.food.ordering.orderapplicationservice.dto.create.CreateOrderResponse
 import com.food.ordering.orderapplicationservice.dto.create.OrderItem
 import com.food.ordering.orderdomaincore.entity.Order
 import com.food.ordering.orderdomaincore.entity.Product
@@ -43,8 +44,6 @@ class OrderDataMapper {
             ),
             price = Money(command.price),
             items = createOrderItemsToOrderItemEntities(orderId, command.items),
-            trackingId = null,
-            orderStatus = null,
         )
         order.id = orderId
         return order
@@ -54,7 +53,6 @@ class OrderDataMapper {
         return orderItem.map { item ->
             val orderItemEntity = com.food.ordering.orderdomaincore.entity.OrderItem(
                 product = Product(
-                    name = "",
                     price = Money(item.price),
                     productId = ProductId(item.productId)
                 ),
@@ -66,5 +64,13 @@ class OrderDataMapper {
             orderItemEntity.product.id = ProductId(item.productId)
             orderItemEntity
         }
+    }
+
+    fun createOrderToCreateOrderResponse(saveOrder: Order): CreateOrderResponse {
+        return CreateOrderResponse(
+            orderTrackingId = saveOrder.trackingId!!.value,
+            orderStatus = saveOrder.orderStatus!!,
+            message = "Order created successfully"
+        )
     }
 }

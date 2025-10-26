@@ -7,7 +7,9 @@ import com.food.ordering.orderapplicationservice.ports.output.repository.Custome
 import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
 import com.food.ordering.orderapplicationservice.ports.output.repository.RestaurantRepository
 import com.food.ordering.orderdomaincore.OrderDomainService
+import com.food.ordering.orderdomaincore.entity.Order
 import com.food.ordering.orderdomaincore.entity.Restaurant
+import com.food.ordering.orderdomaincore.event.OrderCreatedEvent
 import com.food.ordering.orderdomaincore.exception.OrderDomainException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -27,7 +29,12 @@ class OrderCreateCommandHandler(
     @Transactional
     fun createOrder(command: CreateOrderCommand): CreateOrderResponse {
         checkCustomer(command.customerId)
-        checkRestaurant(command)
+        val restaurant = checkRestaurant(command)
+        val order = orderDataMapper.createOrderCommandToOrder(command)
+        val orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant)
+        val saveOrder = saveOrder(orderCreatedEvent)
+        logger.info("saving order ${order.id}")
+        return orderDataMapper.createOrderToCreateOrderResponse(saveOrder)
     }
 
     private fun checkCustomer(customerId: UUID) {
@@ -47,5 +54,12 @@ class OrderCreateCommandHandler(
         }
 
         return optionalRestaurant
+    }
+
+    private fun saveOrder(orderCreatedEvent: OrderCreatedEvent): Order {
+        val order = orderCreatedEvent.order
+        val savedOrder = orderRepository.save(order) ?: throw OrderDomainException("Could not save order")
+        logger.info("Order with id ${savedOrder.id.value} is saved successfully")
+        return savedOrder
     }
 }

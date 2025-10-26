@@ -15,8 +15,8 @@ class Order(
     val price: Money,
     val items: List<OrderItem>,
 
-    var trackingId: TrackingId,
-    var orderStatus: OrderStatus,
+    var trackingId: TrackingId? = null,
+    var orderStatus: OrderStatus? = null,
     var failureMessages: List<String>? = null
 ): AggregateRoot<OrderId>() {
     fun initializeOrder() {

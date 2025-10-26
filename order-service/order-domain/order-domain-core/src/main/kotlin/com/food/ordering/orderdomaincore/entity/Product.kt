@@ -6,7 +6,7 @@ import com.food.ordering.commondomain.valueobject.ProductId
 
 class Product(
     val productId: ProductId,
-    var name: String,
+    var name: String? = null,
     var price: Money
 ): BaseEntity<ProductId>() {
     fun updateWithConfirmedNameAndPrice(name: String, price: Money) {

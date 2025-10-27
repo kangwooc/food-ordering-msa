@@ -22,7 +22,8 @@ class OrderCreateCommandHandler(
     private val orderRepository: OrderRepository,
     private val customerRepository: CustomerRepository,
     private val restaurantRepository: RestaurantRepository,
-    private val orderDataMapper: OrderDataMapper
+    private val orderDataMapper: OrderDataMapper,
+    private val applicationDomainEventPublisher: ApplicationDomainEventPublisher
 ) {
     private val logger = LoggerFactory.getLogger(OrderCreateCommandHandler::class.java)
 
@@ -34,6 +35,8 @@ class OrderCreateCommandHandler(
         val orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant)
         val saveOrder = saveOrder(orderCreatedEvent)
         logger.info("saving order ${order.id}")
+        applicationDomainEventPublisher.publish(orderCreatedEvent)
+
         return orderDataMapper.createOrderToCreateOrderResponse(saveOrder)
     }
 

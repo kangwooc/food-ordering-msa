@@ -4,18 +4,9 @@ import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
 import com.food.ordering.orderapplicationservice.dto.create.CreateOrderResponse
 import com.food.ordering.orderapplicationservice.mapper.OrderDataMapper
 import com.food.ordering.orderapplicationservice.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
-import com.food.ordering.orderapplicationservice.ports.output.repository.CustomerRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.RestaurantRepository
-import com.food.ordering.orderdomaincore.OrderDomainService
-import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.food.ordering.orderdomaincore.event.OrderCreatedEvent
-import com.food.ordering.orderdomaincore.exception.OrderDomainException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
 
 @Component
 class OrderCreateCommandHandler(

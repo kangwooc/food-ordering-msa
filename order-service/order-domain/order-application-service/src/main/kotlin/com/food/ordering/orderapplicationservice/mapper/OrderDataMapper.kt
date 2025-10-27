@@ -4,6 +4,7 @@ import com.food.ordering.commondomain.valueobject.*
 import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
 import com.food.ordering.orderapplicationservice.dto.create.CreateOrderResponse
 import com.food.ordering.orderapplicationservice.dto.create.OrderItem
+import com.food.ordering.orderapplicationservice.dto.track.TrackOrderResponse
 import com.food.ordering.orderdomaincore.entity.Order
 import com.food.ordering.orderdomaincore.entity.Product
 import com.food.ordering.orderdomaincore.entity.Restaurant
@@ -71,6 +72,14 @@ class OrderDataMapper {
             orderTrackingId = saveOrder.trackingId!!.value,
             orderStatus = saveOrder.orderStatus!!,
             message = "Order created successfully"
+        )
+    }
+
+    fun orderToTrackOrderResponse(order: Order): TrackOrderResponse {
+        return TrackOrderResponse(
+            orderTrackingId = order.trackingId!!.value,
+            orderStatus = order.orderStatus!!,
+            failureMessages = order.failureMessages
         )
     }
 }

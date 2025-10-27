@@ -7,20 +7,24 @@ plugins {
     val kotlinVersion = "2.2.21"
     val springBootVersion = "3.5.7"
     val springDependencyManagementVersion = "1.1.7"
+    val avroVersion = "1.9.1"
 
     kotlin("jvm") version kotlinVersion apply false
     kotlin("plugin.spring") version kotlinVersion apply false
     kotlin("plugin.jpa") version kotlinVersion apply false
     kotlin("kapt") version kotlinVersion apply false
+    kotlin("plugin.serialization") version kotlinVersion apply false
 
     id("org.springframework.boot") version springBootVersion apply false
     id("io.spring.dependency-management") version springDependencyManagementVersion apply false
+    id("com.github.davidmc24.gradle.plugin.avro") version avroVersion apply false
 }
 
 allprojects {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        maven("https://packages.confluent.io/maven/")
     }
 
     tasks.withType<KotlinJvmCompile>().configureEach {

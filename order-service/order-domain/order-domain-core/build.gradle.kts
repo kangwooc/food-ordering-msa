@@ -6,10 +6,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":order-service:order-container"))
-    implementation(project(":order-service:order-application"))
-    implementation(project(":order-service:order-dataaccess"))
-    implementation(project(":order-service:order-messaging"))
     implementation(project(":common:common-domain"))
 
     implementation("org.springframework.boot:spring-boot-starter")

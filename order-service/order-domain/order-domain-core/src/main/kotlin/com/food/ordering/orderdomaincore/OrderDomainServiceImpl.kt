@@ -56,12 +56,12 @@ class OrderDomainServiceImpl: OrderDomainService {
     }
 
     private fun setOrderProductInformation(order: Order, restaurant: Restaurant) {
-        val productById = restaurant.products.associateBy { it.id }
+        val productById = restaurant.products.associateBy { it.productId }
         order.items.forEach { orderItem ->
             val currentProduct = productById[orderItem.product.id]
                 ?: throw OrderDomainException("Product with id ${orderItem.product.id.value} not found in restaurant ${restaurant.id.value}")
             currentProduct.updateWithConfirmedNameAndPrice(
-                orderItem.product.name,
+                orderItem.product.name ?: "",
                 orderItem.product.price
             )
         }

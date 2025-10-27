@@ -16,7 +16,7 @@ class Order(
     val items: List<OrderItem>,
 
     var trackingId: TrackingId? = null,
-    var orderStatus: OrderStatus? = null,
+    var orderStatus: OrderStatus = OrderStatus.PENDING,
     var failureMessages: List<String>? = null
 ): AggregateRoot<OrderId>() {
     fun initializeOrder() {
@@ -55,14 +55,14 @@ class Order(
             item.subTotal
         }.fold(Money.ZERO, Money::plus)
 
-        if(price != orderTotal) {
-            throw OrderDomainException("Total price: $price does not match sum of item prices: $orderTotal")
+        if (price != orderTotal) {
+            throw OrderDomainException("Total price: ${price.amount} does not match sum of item prices: ${orderTotal.amount}")
         }
     }
 
     private fun validateItemPrice(item: OrderItem) {
         if (!item.isPriceValid()) {
-            throw OrderDomainException("Order item price: ${item.price} is not valid for product: ${item.product.productId.value}")
+            throw OrderDomainException("Order item price: ${item.price.amount} is not valid for product: ${item.product.productId.value}")
         }
     }
 

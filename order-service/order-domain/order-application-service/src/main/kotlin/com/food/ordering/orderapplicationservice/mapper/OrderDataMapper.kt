@@ -67,18 +67,18 @@ class OrderDataMapper {
         }
     }
 
-    fun createOrderToCreateOrderResponse(saveOrder: Order): CreateOrderResponse {
+    fun createOrderToCreateOrderResponse(saveOrder: Order, message: String): CreateOrderResponse {
         return CreateOrderResponse(
             orderTrackingId = saveOrder.trackingId!!.value,
-            orderStatus = saveOrder.orderStatus!!,
-            message = "Order created successfully"
+            orderStatus = saveOrder.orderStatus,
+            message = message
         )
     }
 
     fun orderToTrackOrderResponse(order: Order): TrackOrderResponse {
         return TrackOrderResponse(
             orderTrackingId = order.trackingId!!.value,
-            orderStatus = order.orderStatus!!,
+            orderStatus = order.orderStatus,
             failureMessages = order.failureMessages
         )
     }

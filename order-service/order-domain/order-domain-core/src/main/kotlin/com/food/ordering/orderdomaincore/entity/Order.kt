@@ -19,6 +19,10 @@ class Order(
     var orderStatus: OrderStatus = OrderStatus.PENDING,
     var failureMessages: List<String>? = null
 ): AggregateRoot<OrderId>() {
+    companion object {
+        val FAILURE_MESSAGE_DELIMITER = ","
+    }
+
     fun initializeOrder() {
         this.id = OrderId(UUID.randomUUID())
         this.trackingId = TrackingId(UUID.randomUUID())

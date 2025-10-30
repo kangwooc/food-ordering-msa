@@ -1,8 +1,8 @@
-package com.food.ordering.orderapplicationservice
+package com.food.ordering.system.order.service.domain
 
 import com.food.ordering.commondomain.valueobject.OrderStatus
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderQuery
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderResponse
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 

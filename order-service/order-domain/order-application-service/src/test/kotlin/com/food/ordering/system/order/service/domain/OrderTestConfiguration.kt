@@ -1,20 +1,17 @@
 package com.food.ordering.system.order.service.domain
 
-import com.food.ordering.orderapplicationservice.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
-import com.food.ordering.orderapplicationservice.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher
-import com.food.ordering.orderapplicationservice.ports.output.repository.CustomerRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.RestaurantRepository
-import com.food.ordering.system.order.service.domain.OrderDomainService
-import com.food.ordering.orderdomaincore.OrderDomainServiceImpl
+import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
+import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher
+import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository
+import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository
 import org.mockito.Mockito
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication(
     scanBasePackages = [
-        "com.food.ordering.orderapplicationservice",
-        "com.food.ordering.orderdomaincore",
+        "com.food.ordering.system.order.service.domain",
         "com.food.ordering.commondomain"
     ])
 class OrderTestConfiguration {

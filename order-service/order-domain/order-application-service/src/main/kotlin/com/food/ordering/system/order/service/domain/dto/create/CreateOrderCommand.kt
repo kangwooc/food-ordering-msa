@@ -1,4 +1,4 @@
-package com.food.ordering.orderapplicationservice.dto.create
+package com.food.ordering.system.order.service.domain.dto.create
 
 import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal

@@ -1,9 +1,9 @@
-package com.ordering.system.order.service.dataaccess.restaurant.adapter
+package com.food.ordering.system.order.service.dataaccess.restaurant.adapter
 
 import com.food.ordering.orderapplicationservice.ports.output.repository.RestaurantRepository
 import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.ordering.system.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper
-import com.ordering.system.order.service.dataaccess.restaurant.repository.RestaurantJpaRepository
+import com.food.ordering.system.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper
+import com.food.ordering.system.order.service.dataaccess.restaurant.repository.RestaurantJpaRepository
 import org.springframework.stereotype.Component
 
 @Component

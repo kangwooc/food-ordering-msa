@@ -1,4 +1,4 @@
-package com.food.ordering.orderapplicationservice.dto.track
+package com.food.ordering.system.order.service.domain.dto.track
 
 import com.food.ordering.commondomain.valueobject.OrderStatus
 import jakarta.validation.constraints.NotNull

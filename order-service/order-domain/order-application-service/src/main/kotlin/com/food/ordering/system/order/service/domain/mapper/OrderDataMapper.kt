@@ -1,14 +1,13 @@
-package com.food.ordering.orderapplicationservice.mapper
+package com.food.ordering.system.order.service.domain.mapper
 
 import com.food.ordering.commondomain.valueobject.*
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderResponse
-import com.food.ordering.orderapplicationservice.dto.create.OrderItem
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderResponse
-import com.food.ordering.orderdomaincore.entity.Order
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse
+import com.food.ordering.system.order.service.domain.entity.Order
+import com.food.ordering.system.order.service.domain.entity.OrderItem
 import com.food.ordering.system.order.service.domain.entity.Product
-import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.food.ordering.system.order.service.domain.valueobject.StreetAddress
+import com.food.ordering.system.order.service.domain.entity.Restaurant
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -17,7 +16,7 @@ class OrderDataMapper {
     fun createOrderCommandToRestaurant(command: CreateOrderCommand): Restaurant {
         val restaurant = Restaurant(
             products = command.items.map { item ->
-                val product = com.food.ordering.system.order.service.domain.entity.Product(
+                val product = Product(
                     name = "",
                     price = Money(item.price),
                     productId = ProductId(item.productId)
@@ -50,10 +49,10 @@ class OrderDataMapper {
         return order
     }
 
-    private fun createOrderItemsToOrderItemEntities(orderId: OrderId, orderItem: List<OrderItem>): List<com.food.ordering.system.order.service.domain.entity.OrderItem> {
+    private fun createOrderItemsToOrderItemEntities(orderId: OrderId, orderItem: List<com.food.ordering.system.order.service.domain.dto.create.OrderItem>): List<OrderItem> {
         return orderItem.map { item ->
-            val orderItemEntity = com.food.ordering.system.order.service.domain.entity.OrderItem(
-                product = com.food.ordering.system.order.service.domain.entity.Product(
+            val orderItemEntity = OrderItem(
+                product = Product(
                     price = Money(item.price),
                     productId = ProductId(item.productId)
                 ),

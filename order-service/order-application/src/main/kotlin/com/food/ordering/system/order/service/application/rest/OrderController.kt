@@ -1,12 +1,11 @@
-package com.food.ordering.orderapplication.rest
+package com.food.ordering.system.order.service.application.rest
 
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderResponse
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderQuery
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderResponse
-import com.food.ordering.orderapplicationservice.ports.input.service.OrderApplicationService
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse
+import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService
 import org.slf4j.LoggerFactory
-import org.springframework.core.annotation.Order
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.UUID

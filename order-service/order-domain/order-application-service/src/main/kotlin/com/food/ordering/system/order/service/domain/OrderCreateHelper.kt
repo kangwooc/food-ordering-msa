@@ -1,15 +1,14 @@
-package com.food.ordering.orderapplicationservice
+package com.food.ordering.system.order.service.domain
 
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
-import com.food.ordering.orderapplicationservice.mapper.OrderDataMapper
-import com.food.ordering.orderapplicationservice.ports.output.repository.CustomerRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.RestaurantRepository
-import com.food.ordering.system.order.service.domain.OrderDomainService
-import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.orderdomaincore.entity.Restaurant
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand
+import com.food.ordering.system.order.service.domain.entity.Order
+import com.food.ordering.system.order.service.domain.entity.Restaurant
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException
+import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper
+import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository
+import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -17,7 +16,7 @@ import java.util.*
 
 @Component
 class OrderCreateHelper(
-    private val orderDomainService: com.food.ordering.system.order.service.domain.OrderDomainService,
+    private val orderDomainService: OrderDomainService,
     private val orderRepository: OrderRepository,
     private val customerRepository: CustomerRepository,
     private val restaurantRepository: RestaurantRepository,
@@ -26,7 +25,7 @@ class OrderCreateHelper(
     private val logger = LoggerFactory.getLogger(OrderCreateHelper::class.java)
 
     @Transactional
-    fun persistOrder(command: CreateOrderCommand): com.food.ordering.system.order.service.domain.event.OrderCreatedEvent {
+    fun persistOrder(command: CreateOrderCommand): OrderCreatedEvent {
         checkCustomer(command.customerId)
         val restaurant = checkRestaurant(command)
         val order = orderDataMapper.createOrderCommandToOrder(command)
@@ -40,7 +39,7 @@ class OrderCreateHelper(
         val customer = customerRepository.findCustomer(customerId)
         if (customer == null) {
             logger.warn("Customer with id $customerId not found")
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Customer with id $customerId not found")
+            throw OrderDomainException("Customer with id $customerId not found")
         }
     }
 
@@ -49,17 +48,15 @@ class OrderCreateHelper(
         val optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant)
         if (optionalRestaurant == null) {
             logger.warn("Restaurant with id ${restaurant.id.value} not found")
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Restaurant with id ${restaurant.id.value} not found")
+            throw OrderDomainException("Restaurant with id ${restaurant.id.value} not found")
         }
 
         return optionalRestaurant
     }
 
-    private fun saveOrder(orderCreatedEvent: com.food.ordering.system.order.service.domain.event.OrderCreatedEvent): Order {
+    private fun saveOrder(orderCreatedEvent: OrderCreatedEvent): Order {
         val order = orderCreatedEvent.order
-        val savedOrder = orderRepository.save(order) ?: throw com.food.ordering.system.order.service.domain.exception.OrderDomainException(
-            "Could not save order"
-        )
+        val savedOrder = orderRepository.save(order) ?: throw OrderDomainException("Could not save order")
         logger.info("Order with id ${savedOrder.id.value} is saved successfully")
         return savedOrder
     }

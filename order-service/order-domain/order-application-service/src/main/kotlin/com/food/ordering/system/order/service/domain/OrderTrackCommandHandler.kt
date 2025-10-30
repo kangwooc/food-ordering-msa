@@ -1,21 +1,18 @@
-package com.food.ordering.orderapplicationservice
+package com.food.ordering.system.order.service.domain
 
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderQuery
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderResponse
-import com.food.ordering.orderapplicationservice.mapper.OrderDataMapper
-import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
-import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException
-import com.food.ordering.system.order.service.domain.valueobject.TrackingId
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse
+import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
 class OrderTrackCommandHandler(
     private val mapper: OrderDataMapper,
-    private val orderRepository: OrderRepository,
+    private val orderRepository: OrderRepository
 ) {
-    private val logger = org.slf4j.LoggerFactory.getLogger(OrderTrackCommandHandler::class.java)
+    private val logger = org.slf4j.LoggerFactory.getLogger(com.food.ordering.system.order.service.domain.OrderTrackCommandHandler::class.java)
 
     @Transactional(readOnly = true)
     fun trackOrder(trackOrderQuery: TrackOrderQuery): TrackOrderResponse {

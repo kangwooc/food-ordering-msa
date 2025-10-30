@@ -2,7 +2,7 @@ package com.food.ordering.system.order.service.messaging.publisher.kafka
 
 import com.food.ordering.orderapplicationservice.config.OrderServiceConfigData
 import com.food.ordering.orderapplicationservice.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
-import com.food.ordering.orderdomaincore.event.OrderCreatedEvent
+import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
 import com.food.ordering.service.system.kafka.producer.service.KafkaProducer
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper
@@ -19,7 +19,7 @@ class CreateOrderKafkaMessagePublisher(
 
     private val logger = LoggerFactory.getLogger(CreateOrderKafkaMessagePublisher::class.java)
 
-    override fun publish(domainEvent: OrderCreatedEvent) {
+    override fun publish(domainEvent: com.food.ordering.system.order.service.domain.event.OrderCreatedEvent) {
         val orderId = domainEvent.order.id.value.toString()
         logger.info("Received OrderCreatedEvent for order id: $orderId")
         try {

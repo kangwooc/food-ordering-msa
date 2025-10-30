@@ -1,4 +1,4 @@
-package com.ordering.system.order.service.dataaccess.restaurant.exception
+package com.food.ordering.system.order.service.dataaccess.restaurant.exception
 
 class RestaurantDataAccessException(
     message: String

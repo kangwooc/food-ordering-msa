@@ -1,10 +1,11 @@
-package com.food.ordering.orderapplicationservice
+package com.food.ordering.system.order.service.domain
 
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderResponse
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderQuery
-import com.food.ordering.orderapplicationservice.dto.track.TrackOrderResponse
-import com.food.ordering.orderapplicationservice.ports.input.service.OrderApplicationService
+
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse
+import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService
 import org.springframework.stereotype.Service
 import org.springframework.validation.annotation.Validated
 

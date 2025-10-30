@@ -1,16 +1,16 @@
-package com.food.ordering.orderdomaincore
+package com.food.ordering.system.order.service.domain
 
-import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.food.ordering.orderdomaincore.event.OrderCancelledEvent
-import com.food.ordering.orderdomaincore.event.OrderCreatedEvent
-import com.food.ordering.orderdomaincore.event.OrderPaidEvent
-import com.food.ordering.orderdomaincore.exception.OrderDomainException
+import com.food.ordering.system.order.service.domain.entity.Order
+import com.food.ordering.system.order.service.domain.entity.Restaurant
+import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
+import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
+import com.food.ordering.system.order.service.domain.event.OrderPaidEvent
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException
 import org.slf4j.LoggerFactory
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-class OrderDomainServiceImpl: OrderDomainService {
+class OrderDomainServiceImpl: com.food.ordering.system.order.service.domain.OrderDomainService {
     private val logger = LoggerFactory.getLogger(OrderDomainServiceImpl::class.java)
     private val UTC = "UTC"
 
@@ -22,14 +22,20 @@ class OrderDomainServiceImpl: OrderDomainService {
 
         logger.info("Order ${order.id.value} created")
 
-        return OrderCreatedEvent(order, ZonedDateTime.now(ZoneId.of(UTC)))
+        return OrderCreatedEvent(
+            order,
+            ZonedDateTime.now(ZoneId.of(UTC))
+        )
     }
 
     override fun payOrder(order: Order): OrderPaidEvent {
         order.pay()
         logger.info("Order ${order.id.value} paid")
 
-        return OrderPaidEvent(order, ZonedDateTime.now(ZoneId.of(UTC)))
+        return OrderPaidEvent(
+            order,
+            ZonedDateTime.now(ZoneId.of(UTC))
+        )
     }
 
     override fun approveOrder(order: Order) {

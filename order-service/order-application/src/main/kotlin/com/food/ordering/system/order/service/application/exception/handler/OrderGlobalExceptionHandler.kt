@@ -1,7 +1,7 @@
-package com.food.ordering.orderapplication.exception.handler
+package com.food.ordering.system.order.service.application.exception.handler
 
-import com.food.ordering.orderdomaincore.exception.OrderDomainException
-import com.food.ordering.orderdomaincore.exception.OrderNotFoundException
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException
+import com.food.ordering.system.order.service.domain.exception.OrderNotFoundException
 import com.food.ordering.system.application.handler.ErrorDTO
 import com.food.ordering.system.application.handler.GlobalExceptionHandler
 import org.slf4j.LoggerFactory
@@ -16,17 +16,17 @@ class OrderGlobalExceptionHandler: GlobalExceptionHandler() {
     private val logger = LoggerFactory.getLogger(OrderGlobalExceptionHandler::class.java)
 
     @ResponseBody
-    @ExceptionHandler(OrderDomainException::class)
+    @ExceptionHandler(com.food.ordering.system.order.service.domain.exception.OrderDomainException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleOrderDomainException(ex: OrderDomainException): ErrorDTO {
+    fun handleOrderDomainException(ex: com.food.ordering.system.order.service.domain.exception.OrderDomainException): ErrorDTO {
         logger.error("OrderDomainException occurred: ${ex.message}", ex)
         return ErrorDTO(code = HttpStatus.BAD_REQUEST.reasonPhrase, message = ex.message ?: "An error occurred in the order domain")
     }
 
     @ResponseBody
-    @ExceptionHandler(OrderDomainException::class)
+    @ExceptionHandler(com.food.ordering.system.order.service.domain.exception.OrderDomainException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handleOrderDomainException(ex: OrderNotFoundException): ErrorDTO {
+    fun handleOrderDomainException(ex: com.food.ordering.system.order.service.domain.exception.OrderNotFoundException): ErrorDTO {
         logger.error("OrderDomainException occurred: ${ex.message}", ex)
         return ErrorDTO(code = HttpStatus.NOT_FOUND.reasonPhrase, message = ex.message ?: "An error occurred in the order domain")
     }

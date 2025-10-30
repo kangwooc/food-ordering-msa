@@ -1,7 +1,6 @@
-package com.food.ordering.orderapplicationservice.ports.output.repository
+package com.food.ordering.system.order.service.domain.ports.output.repository
 
-import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.system.order.service.domain.valueobject.TrackingId
+import com.food.ordering.system.order.service.domain.entity.Order
 
 interface OrderRepository {
     fun save(order: Order): Order?

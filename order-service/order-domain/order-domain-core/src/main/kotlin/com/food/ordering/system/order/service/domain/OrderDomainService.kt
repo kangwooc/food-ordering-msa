@@ -1,10 +1,10 @@
-package com.food.ordering.orderdomaincore
+package com.food.ordering.system.order.service.domain
 
-import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.food.ordering.orderdomaincore.event.OrderCancelledEvent
-import com.food.ordering.orderdomaincore.event.OrderCreatedEvent
-import com.food.ordering.orderdomaincore.event.OrderPaidEvent
+import com.food.ordering.system.order.service.domain.entity.Order
+import com.food.ordering.system.order.service.domain.entity.Restaurant
+import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
+import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
+import com.food.ordering.system.order.service.domain.event.OrderPaidEvent
 
 // 도메인 서비스에서 도메인 이벤트를 반환
 // 주문 검증, 결제 처리, 승인 및 취소 로직을 포함

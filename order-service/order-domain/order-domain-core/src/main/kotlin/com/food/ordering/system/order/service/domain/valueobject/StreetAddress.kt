@@ -1,4 +1,4 @@
-package com.food.ordering.orderdomaincore.valueobject
+package com.food.ordering.system.order.service.domain.valueobject
 
 import java.util.UUID
 
@@ -12,7 +12,7 @@ class StreetAddress(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as StreetAddress
+        other as com.food.ordering.system.order.service.domain.valueobject.StreetAddress
 
         return id == other.id
     }

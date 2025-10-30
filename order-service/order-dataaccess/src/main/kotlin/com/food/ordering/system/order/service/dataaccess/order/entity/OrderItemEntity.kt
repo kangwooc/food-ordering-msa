@@ -1,4 +1,4 @@
-package com.ordering.system.order.service.dataaccess.order.entity
+package com.food.ordering.system.order.service.dataaccess.order.entity
 
 import jakarta.persistence.*
 import java.math.BigDecimal

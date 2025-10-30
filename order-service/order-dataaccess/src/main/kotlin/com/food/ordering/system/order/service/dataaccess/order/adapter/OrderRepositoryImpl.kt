@@ -1,10 +1,10 @@
-package com.ordering.system.order.service.dataaccess.order.adapter
+package com.food.ordering.system.order.service.dataaccess.order.adapter
 
 import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
 import com.food.ordering.orderdomaincore.entity.Order
-import com.food.ordering.orderdomaincore.valueobject.TrackingId
-import com.ordering.system.order.service.dataaccess.order.mapper.OrderDataAccessMapper
-import com.ordering.system.order.service.dataaccess.order.repository.OrderJpaRepository
+import com.food.ordering.system.order.service.domain.valueobject.TrackingId
+import com.food.ordering.system.order.service.dataaccess.order.mapper.OrderDataAccessMapper
+import com.food.ordering.system.order.service.dataaccess.order.repository.OrderJpaRepository
 import org.springframework.stereotype.Component
 
 @Component
@@ -20,7 +20,7 @@ class OrderRepositoryImpl(
         )
     }
 
-    override fun findByTrackingId(trackingId: TrackingId): Order? {
+    override fun findByTrackingId(trackingId: com.food.ordering.system.order.service.domain.valueobject.TrackingId): Order? {
         return orderJpaRepository.findByTrackingId(trackingId.value)?.let {
             orderDataAccessMapper.orderEntityToOrder(it)
         }

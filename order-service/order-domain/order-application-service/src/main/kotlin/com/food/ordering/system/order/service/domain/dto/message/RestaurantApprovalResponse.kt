@@ -1,4 +1,4 @@
-package com.food.ordering.orderapplicationservice.dto.message
+package com.food.ordering.system.order.service.domain.dto.message
 
 import com.food.ordering.commondomain.valueobject.OrderApprovalStatus
 import java.time.Instant

@@ -1,19 +1,18 @@
 package com.food.ordering.system.order.service.domain
 
 import com.food.ordering.commondomain.valueobject.*
-import com.food.ordering.orderapplicationservice.dto.create.CreateOrderCommand
-import com.food.ordering.orderapplicationservice.dto.create.OrderAddress
-import com.food.ordering.orderapplicationservice.dto.create.OrderItem
-import com.food.ordering.orderapplicationservice.mapper.OrderDataMapper
-import com.food.ordering.orderapplicationservice.ports.input.service.OrderApplicationService
-import com.food.ordering.orderapplicationservice.ports.output.repository.CustomerRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.OrderRepository
-import com.food.ordering.orderapplicationservice.ports.output.repository.RestaurantRepository
 import com.food.ordering.system.order.service.domain.entity.Customer
-import com.food.ordering.orderdomaincore.entity.Order
 import com.food.ordering.system.order.service.domain.entity.Product
-import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.food.ordering.system.order.service.domain.exception.OrderDomainException
+import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand
+import com.food.ordering.system.order.service.domain.dto.create.OrderAddress
+import com.food.ordering.system.order.service.domain.dto.create.OrderItem
+import com.food.ordering.system.order.service.domain.entity.Order
+import com.food.ordering.system.order.service.domain.entity.Restaurant
+import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper
+import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService
+import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository
+import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository
+import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -129,18 +128,18 @@ class OrderApplicationServiceTest @Autowired constructor(
 
 
 
-        val customer = com.food.ordering.system.order.service.domain.entity.Customer()
+        val customer = Customer()
         customer.id = CustomerId(CUSTOMER_ID)
 
         val restaurant = Restaurant(
             active = true,
             products = listOf(
-                com.food.ordering.system.order.service.domain.entity.Product(
+                Product(
                     name = "product-1",
                     price = Money(BigDecimal("50.00")),
                     productId = ProductId(PRODUCT_ID)
                 ),
-                com.food.ordering.system.order.service.domain.entity.Product(
+                Product(
                     name = "product-2",
                     price = Money(BigDecimal("50.00")),
                     productId = ProductId(PRODUCT_ID)

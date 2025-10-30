@@ -1,11 +1,11 @@
-package com.ordering.system.order.service.dataaccess.restaurant.mapper
+package com.food.ordering.system.order.service.dataaccess.restaurant.mapper
 
 import com.food.ordering.commondomain.valueobject.Money
 import com.food.ordering.commondomain.valueobject.ProductId
-import com.food.ordering.orderdomaincore.entity.Product
+import com.food.ordering.system.order.service.domain.entity.Product
 import com.food.ordering.orderdomaincore.entity.Restaurant
-import com.ordering.system.order.service.dataaccess.restaurant.entity.RestaurantEntity
-import com.ordering.system.order.service.dataaccess.restaurant.exception.RestaurantDataAccessException
+import com.food.ordering.system.order.service.dataaccess.restaurant.entity.RestaurantEntity
+import com.food.ordering.system.order.service.dataaccess.restaurant.exception.RestaurantDataAccessException
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -20,7 +20,7 @@ class RestaurantDataAccessMapper {
             throw RestaurantDataAccessException("Restaurant could not be found!")
 
         val restaurantProducts = restaurantEntities.map {
-            Product(
+            com.food.ordering.system.order.service.domain.entity.Product(
                 productId = ProductId(it.productId),
                 name = it.productName,
                 price = Money(it.productPrice)

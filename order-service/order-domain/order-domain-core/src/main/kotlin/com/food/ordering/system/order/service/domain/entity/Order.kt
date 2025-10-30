@@ -1,21 +1,21 @@
-package com.food.ordering.orderdomaincore.entity
+package com.food.ordering.system.order.service.domain.entity
 
 import com.food.ordering.commondomain.entity.AggregateRoot
 import com.food.ordering.commondomain.valueobject.*
-import com.food.ordering.orderdomaincore.exception.OrderDomainException
-import com.food.ordering.orderdomaincore.valueobject.OrderItemId
-import com.food.ordering.orderdomaincore.valueobject.TrackingId
-import com.food.ordering.orderdomaincore.valueobject.StreetAddress
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException
+import com.food.ordering.system.order.service.domain.valueobject.OrderItemId
+import com.food.ordering.system.order.service.domain.valueobject.TrackingId
+import com.food.ordering.system.order.service.domain.valueobject.StreetAddress
 import java.util.*
 
 class Order(
     val customerId: CustomerId,
     val restaurantId: RestaurantId,
-    val deliveryAddress: StreetAddress,
+    val deliveryAddress: com.food.ordering.system.order.service.domain.valueobject.StreetAddress,
     val price: Money,
-    val items: List<OrderItem>,
+    val items: List<com.food.ordering.system.order.service.domain.entity.OrderItem>,
 
-    var trackingId: TrackingId? = null,
+    var trackingId: com.food.ordering.system.order.service.domain.valueobject.TrackingId? = null,
     var orderStatus: OrderStatus = OrderStatus.PENDING,
     var failureMessages: List<String>? = null
 ): AggregateRoot<OrderId>() {
@@ -25,14 +25,16 @@ class Order(
 
     fun initializeOrder() {
         this.id = OrderId(UUID.randomUUID())
-        this.trackingId = TrackingId(UUID.randomUUID())
+        this.trackingId = com.food.ordering.system.order.service.domain.valueobject.TrackingId(UUID.randomUUID())
         initializeOrderItems(this.id)
     }
 
     private fun initializeOrderItems(orderId: OrderId) {
         var itemId = 1L
         this.items.forEach { orderItem ->
-            orderItem.initializeOrderItem(orderId, OrderItemId(itemId))
+            orderItem.initializeOrderItem(orderId,
+                com.food.ordering.system.order.service.domain.valueobject.OrderItemId(itemId)
+            )
             itemId++
         }
     }
@@ -49,7 +51,7 @@ class Order(
 
     private fun validateTotalPrice() {
         if (!this.price.isGreaterThanZero()) {
-            throw OrderDomainException("Total price must be greater than zero.")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Total price must be greater than zero.")
         }
     }
 
@@ -60,33 +62,33 @@ class Order(
         }.fold(Money.ZERO, Money::plus)
 
         if (price != orderTotal) {
-            throw OrderDomainException("Total price: ${price.amount} does not match sum of item prices: ${orderTotal.amount}")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Total price: ${price.amount} does not match sum of item prices: ${orderTotal.amount}")
         }
     }
 
-    private fun validateItemPrice(item: OrderItem) {
+    private fun validateItemPrice(item: com.food.ordering.system.order.service.domain.entity.OrderItem) {
         if (!item.isPriceValid()) {
-            throw OrderDomainException("Order item price: ${item.price.amount} is not valid for product: ${item.product.productId.value}")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order item price: ${item.price.amount} is not valid for product: ${item.product.productId.value}")
         }
     }
 
     fun pay() {
         if (orderStatus != OrderStatus.PENDING) {
-            throw OrderDomainException("Order is not in correct state for pay operation.")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for pay operation.")
         }
         orderStatus = OrderStatus.PAID
     }
 
     fun approve() {
         if (orderStatus != OrderStatus.PAID) {
-            throw OrderDomainException("Order is not in correct state for approve operation.")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for approve operation.")
         }
         orderStatus = OrderStatus.APPROVED
     }
 
     fun initCancel(failureMessages: List<String>) {
         if (orderStatus != OrderStatus.PAID) {
-            throw OrderDomainException("Order is not in correct state for initCancel operation.")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for initCancel operation.")
         }
         orderStatus = OrderStatus.CANCELLING
         updateFailureMessages(failureMessages)
@@ -94,7 +96,7 @@ class Order(
 
     fun cancel(failureMessages: List<String>) {
         if (!(orderStatus == OrderStatus.PENDING || orderStatus == OrderStatus.CANCELLING)) {
-            throw OrderDomainException("Order is not in correct state for cancel operation.")
+            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for cancel operation.")
         }
         orderStatus = OrderStatus.CANCELLING
         updateFailureMessages(failureMessages)

@@ -3,10 +3,11 @@ package com.food.ordering.system.order.service.domain.config
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 
+@Configuration
 @ConfigurationProperties(prefix = "order-service")
 data class OrderServiceConfigData(
-    val paymentRequestTopicName: String,
-    val paymentResponseTopicName: String,
-    val restaurantApprovalRequestTopicName: String,
-    val restaurantApprovalResponseTopicName: String,
+    var paymentRequestTopicName: String? = null,
+    var paymentResponseTopicName: String? = null,
+    var restaurantApprovalRequestTopicName: String? = null,
+    var restaurantApprovalResponseTopicName: String? = null,
 )

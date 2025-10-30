@@ -1,17 +1,19 @@
 package com.food.ordering.system.order.service.messaging.mapper
 
-import com.food.ordering.orderapplicationservice.dto.message.PaymentResponse
-import com.food.ordering.orderapplicationservice.dto.message.RestaurantApprovalResponse
-import com.food.ordering.orderdomaincore.event.OrderCancelledEvent
+import com.food.ordering.commondomain.valueobject.OrderApprovalStatus
+import com.food.ordering.commondomain.valueobject.PaymentStatus
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
-import com.food.ordering.system.order.service.domain.event.OrderPaidEvent
 import com.food.ordering.system.kafka.order.avro.model.*
+import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse
+import com.food.ordering.system.order.service.domain.dto.message.RestaurantApprovalResponse
+import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
+import com.food.ordering.system.order.service.domain.event.OrderPaidEvent
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
 class OrderMessagingDataMapper {
-    fun orderCreatedEventToOrderResponse(orderCreatedEvent: com.food.ordering.system.order.service.domain.event.OrderCreatedEvent): PaymentRequestAvroModel {
+    fun orderCreatedEventToOrderResponse(orderCreatedEvent: OrderCreatedEvent): PaymentRequestAvroModel {
         val order = orderCreatedEvent.order
         return PaymentRequestAvroModel(
             id = UUID.randomUUID(),
@@ -37,7 +39,7 @@ class OrderMessagingDataMapper {
         )
     }
 
-    fun orderPaidEventToRestaurantApprovalRequestAvroModel(domainEvent: com.food.ordering.system.order.service.domain.event.OrderPaidEvent): RestaurantApprovalRequestAvroModel {
+    fun orderPaidEventToRestaurantApprovalRequestAvroModel(domainEvent: OrderPaidEvent): RestaurantApprovalRequestAvroModel {
         val order = domainEvent.order
         return RestaurantApprovalRequestAvroModel(
             id = UUID.randomUUID(),
@@ -65,7 +67,7 @@ class OrderMessagingDataMapper {
             customerId = paymentResponseAvroModel.customerId.toString(),
             price = paymentResponseAvroModel.price,
             createdAt = paymentResponseAvroModel.createdAt,
-            paymentStatus = com.food.ordering.commondomain.valueobject.PaymentStatus.valueOf(paymentResponseAvroModel.paymentStatus.toString()),
+            paymentStatus = PaymentStatus.valueOf(paymentResponseAvroModel.paymentStatus.toString()),
             failureMessages = paymentResponseAvroModel.failureMessages
         )
     }
@@ -77,7 +79,7 @@ class OrderMessagingDataMapper {
             restaurantId = restaurantApprovalRequestAvroModel.restaurantId.toString(),
             orderId = restaurantApprovalRequestAvroModel.orderId.toString(),
             createdAt = restaurantApprovalRequestAvroModel.createdAt,
-            orderApprovalStatus = com.food.ordering.commondomain.valueobject.OrderApprovalStatus.valueOf(restaurantApprovalRequestAvroModel.orderApprovalStatus.toString()),
+            orderApprovalStatus = OrderApprovalStatus.valueOf(restaurantApprovalRequestAvroModel.orderApprovalStatus.toString()),
             failureMessages = restaurantApprovalRequestAvroModel.failureMessages
         )
     }

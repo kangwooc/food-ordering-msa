@@ -1,6 +1,8 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
+    kotlin("kapt")
+
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 }
@@ -14,6 +16,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

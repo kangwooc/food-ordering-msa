@@ -1,10 +1,9 @@
 package com.food.ordering.system.order.service.messaging.publisher.kafka
 
-import com.food.ordering.orderapplicationservice.config.OrderServiceConfigData
-import com.food.ordering.orderapplicationservice.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
-import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
-import com.food.ordering.service.system.kafka.producer.service.KafkaProducer
+import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel
+import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData
+import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -25,11 +24,11 @@ class CreateOrderKafkaMessagePublisher(
         try {
             val paymentRequestAvroModel = orderMessagingDataMapper.orderCreatedEventToOrderResponse(domainEvent)
             kafkaProducer.send(
-                orderServiceConfigData.paymentRequestTopicName,
+                orderServiceConfigData.paymentRequestTopicName!!,
                 orderId,
                 paymentRequestAvroModel,
                 orderKafkaMessageHelper.getKafkaCallback(
-                    orderServiceConfigData.paymentRequestTopicName,
+                    orderServiceConfigData.paymentRequestTopicName!!,
                     paymentRequestAvroModel,
                     orderId
                 )

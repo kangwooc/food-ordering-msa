@@ -12,17 +12,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @AvroGenerated("""{"type":"record","name":"RestaurantApprovalResponseAvroModel","namespace":"com.food.ordering.system.kafka.order.avro.model","fields":[{"name":"id","type":{"type":"string","logicalType":"uuid"}},{"name":"sagaId","type":{"type":"string","logicalType":"uuid"}},{"name":"restaurantId","type":{"type":"string","logicalType":"uuid"}},{"name":"orderId","type":{"type":"string","logicalType":"uuid"}},{"name":"createdAt","type":{"type":"long","logicalType":"timestamp-millis"}},{"name":"orderApprovalStatus","type":{"type":"enum","name":"OrderApprovalStatus","symbols":["APPROVED","REJECTED"]}},{"name":"failureMessages","type":{"type":"array","items":"string"}}]}""")
-data class RestaurantApprovalResponseAvroModel(
+public data class RestaurantApprovalResponseAvroModel(
     @Serializable(with = UUIDSerializer::class)
-    val id: UUID,
+    public val id: UUID,
     @Serializable(with = UUIDSerializer::class)
-    val sagaId: UUID,
+    public val sagaId: UUID,
     @Serializable(with = UUIDSerializer::class)
-    val restaurantId: UUID,
+    public val restaurantId: UUID,
     @Serializable(with = UUIDSerializer::class)
-    val orderId: UUID,
+    public val orderId: UUID,
     @Serializable(with = InstantSerializer::class)
-    val createdAt: Instant,
-    val orderApprovalStatus: OrderApprovalStatus,
-    val failureMessages: List<String> = emptyList(),
+    public val createdAt: Instant,
+    public val orderApprovalStatus: OrderApprovalStatus,
+    public val failureMessages: List<String> = emptyList(),
 )

@@ -1,7 +1,7 @@
-package com.food.ordering.service.system.kafka.producer.service.impl
+package com.food.ordering.system.kafka.producer.service.impl
 
-import com.food.ordering.service.system.kafka.producer.exception.KafkaProducerException
-import com.food.ordering.service.system.kafka.producer.service.KafkaProducer
+import com.food.ordering.system.kafka.producer.exception.KafkaProducerException
+import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import jakarta.annotation.PreDestroy
 import org.apache.avro.specific.SpecificRecordBase
 import org.slf4j.LoggerFactory

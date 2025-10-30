@@ -1,4 +1,4 @@
-package com.food.ordering.service.system.kafka.producer.exception
+package com.food.ordering.system.kafka.producer.exception
 
 class KafkaProducerException(message: String): RuntimeException(message) {
 

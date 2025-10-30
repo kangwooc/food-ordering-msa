@@ -5,6 +5,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.util.UUID
 
+// Customer M-VIEW Entity
 @Table(name = "order_customer_m_view", schema = "customer")
 @Entity
 class CustomerEntity(

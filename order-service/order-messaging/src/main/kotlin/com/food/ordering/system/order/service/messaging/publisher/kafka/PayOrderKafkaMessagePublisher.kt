@@ -1,10 +1,9 @@
 package com.food.ordering.system.order.service.messaging.publisher.kafka
 
-import com.food.ordering.orderapplicationservice.config.OrderServiceConfigData
-import com.food.ordering.orderapplicationservice.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher
-import com.food.ordering.system.order.service.domain.event.OrderPaidEvent
-import com.food.ordering.service.system.kafka.producer.service.KafkaProducer
+import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel
+import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData
+import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -24,11 +23,11 @@ class PayOrderKafkaMessagePublisher(
         try {
             val restaurantApprovalRequestAvroModel = orderMessagingDataMapper.orderPaidEventToRestaurantApprovalRequestAvroModel(domainEvent)
             kafkaProducer.send(
-                orderServiceConfigData.restaurantApprovalRequestTopicName,
+                orderServiceConfigData.restaurantApprovalRequestTopicName!!,
                 orderId,
                 restaurantApprovalRequestAvroModel,
                 orderKafkaMessageHelper.getKafkaCallback(
-                    orderServiceConfigData.restaurantApprovalRequestTopicName,
+                    orderServiceConfigData.restaurantApprovalRequestTopicName!!,
                     restaurantApprovalRequestAvroModel,
                     orderId
                 )

@@ -1,4 +1,4 @@
-package com.food.ordering.service.system.kafka.producer.service
+package com.food.ordering.system.kafka.producer.service
 
 import org.springframework.kafka.support.SendResult
 import java.io.Serializable

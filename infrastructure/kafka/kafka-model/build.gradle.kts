@@ -3,12 +3,14 @@ plugins {
     kotlin("kapt")
 
     id("com.github.davidmc24.gradle.plugin.avro")
+    id("io.github.avro-kotlin")
 }
 
 dependencies {
     implementation("com.github.avro-kotlin.avro4k:avro4k-core:2.6.0")
+    implementation("com.github.avro-kotlin.avro4k:avro4k-kotlin-generator:2.6.0")
     // kafka
-    implementation("org.springframework.kafka:spring-kafka")
+    api("org.springframework.kafka:spring-kafka")
 
     // avro
     kapt("org.apache.avro:avro:1.12.1")
@@ -24,10 +26,17 @@ avro {
     setEnableDecimalLogicalType(true)
 }
 
+avro4k {
+    sourcesGeneration {
+        inputSchemas.from(sourceSets.main.get().allSource)
+        outputDir.set(file("src/main/kotlin"))
+    }
+}
+
 sourceSets {
     main {
-        java {
-            srcDirs("build/generated-main-avro-java")
+        resources {
+            srcDirs("src/main/resources/avro")
         }
     }
 }

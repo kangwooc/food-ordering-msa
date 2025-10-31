@@ -12,9 +12,9 @@ import java.util.*
 @IdClass(RestaurantEntityId::class)
 class RestaurantEntity(
     @Id
-    var restaurantId: UUID,
+    var restaurantId: UUID? = null,
     @Id
-    var productId: UUID,
+    var productId: UUID? = null,
     var restaurantName: String,
     var restaurantActive: Boolean,
     var productName: String,

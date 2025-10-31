@@ -13,5 +13,5 @@ class CustomerEntity(
     var id: UUID,
     var firstName: String,
     var lastName: String,
-    var email: String,
+    var username: String,
 )

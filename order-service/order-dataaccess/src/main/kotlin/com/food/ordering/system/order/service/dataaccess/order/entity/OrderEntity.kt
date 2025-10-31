@@ -15,7 +15,7 @@ class OrderEntity(
     var trackingId: UUID,
     var price: BigDecimal,
     @Enumerated(EnumType.STRING)
-    var status: OrderStatus,
+    var orderStatus: OrderStatus,
     var failureMessages: String?,
 
     @OneToOne(mappedBy = "order", cascade = [CascadeType.ALL])

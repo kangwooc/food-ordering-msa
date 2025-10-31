@@ -16,7 +16,7 @@ class OrderDataAccessMapper {
             restaurantId = order.restaurantId.value,
             trackingId = order.trackingId!!.value,
             price = order.price.amount,
-            status = order.orderStatus,
+            orderStatus = order.orderStatus,
             address = deliveryAddressToOrderAddressEntity(order.deliveryAddress),
             items = orderItemsToOrderItemEntities(order.items),
             failureMessages = order.failureMessages?.joinToString(Order.FAILURE_MESSAGE_DELIMITER) ?: "",
@@ -40,7 +40,7 @@ class OrderDataAccessMapper {
         val itemEntities = mutableListOf<OrderItemEntity>()
         items.forEach { item ->
             val itemEntity = OrderItemEntity(
-                id = item.orderId.value,
+                id = item.id.value,
                 productId = item.product.productId.value,
                 quantity = item.quantity,
                 price = item.price.amount,
@@ -59,7 +59,7 @@ class OrderDataAccessMapper {
             price = Money(orderEntity.price),
             items = orderItemEntitiesToOrderItems(orderEntity.items),
             trackingId = com.food.ordering.system.order.service.domain.valueobject.TrackingId(orderEntity.trackingId),
-            orderStatus = orderEntity.status,
+            orderStatus = orderEntity.orderStatus,
             failureMessages = orderEntity.failureMessages?.split(Order.FAILURE_MESSAGE_DELIMITER)
         )
         order.id = OrderId(orderEntity.id)
@@ -79,7 +79,7 @@ class OrderDataAccessMapper {
         val items = mutableListOf<com.food.ordering.system.order.service.domain.entity.OrderItem>()
         itemEntities.forEach { itemEntity ->
             val item = com.food.ordering.system.order.service.domain.entity.OrderItem(
-                orderId = OrderId(itemEntity.id!!),
+                orderId = OrderId(itemEntity.order!!.id),
                 product = com.food.ordering.system.order.service.domain.entity.Product(
                     productId = ProductId(itemEntity.productId),
                     price = Money(itemEntity.price)

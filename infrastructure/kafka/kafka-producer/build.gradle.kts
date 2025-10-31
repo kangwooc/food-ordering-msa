@@ -1,5 +1,7 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.serialization")
 }
 
 dependencies {
@@ -9,7 +11,6 @@ dependencies {
     implementation(project(":common:common-domain"))
 
     implementation("org.springframework.boot:spring-boot-starter")
-    // kafka
-    implementation("org.springframework.kafka:spring-kafka")
-    implementation("io.confluent:kafka-avro-serializer:8.1.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 }

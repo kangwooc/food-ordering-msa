@@ -20,7 +20,7 @@ class RestaurantDataAccessMapper {
 
         val restaurantProducts = restaurantEntities.map {
             com.food.ordering.system.order.service.domain.entity.Product(
-                productId = ProductId(it.productId),
+                productId = ProductId(it.productId!!),
                 name = it.productName,
                 price = Money(it.productPrice)
             )

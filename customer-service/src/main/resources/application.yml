@@ -1,0 +1,25 @@
+server:
+  port: 8184
+
+spring:
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:init-schema.sql
+      data-locations: classpath:init-data.sql
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    # writeBatchedInserts: 단일 트랜잭션 내에서 여러 insert 문을 배치로 실행하여 성능 향상
+    # stringtype=unspecified: 문자열 매핑 문제 해결
+    # UUID 타입을 문자열로 처리하는 데 도움
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=customer&binaryTransfer=true&writeBatchedInserts=true&stringtype=unspecified
+    username: postgres
+    password: admin

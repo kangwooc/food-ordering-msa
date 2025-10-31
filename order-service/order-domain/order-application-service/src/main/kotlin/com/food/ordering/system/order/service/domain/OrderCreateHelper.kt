@@ -45,13 +45,13 @@ class OrderCreateHelper(
 
     private fun checkRestaurant(command: CreateOrderCommand): Restaurant {
         val restaurant = orderDataMapper.createOrderCommandToRestaurant(command)
-        val optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant)
-        if (optionalRestaurant == null) {
-            logger.warn("Restaurant with id ${restaurant.id.value} not found")
-            throw OrderDomainException("Restaurant with id ${restaurant.id.value} not found")
-        }
+//        val optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant)
+//        if (optionalRestaurant == null) {
+//            logger.warn("Restaurant with id ${restaurant.id.value} not found")
+//            throw OrderDomainException("Restaurant with id ${restaurant.id.value} not found")
+//        }
 
-        return optionalRestaurant
+        return restaurant
     }
 
     private fun saveOrder(orderCreatedEvent: OrderCreatedEvent): Order {

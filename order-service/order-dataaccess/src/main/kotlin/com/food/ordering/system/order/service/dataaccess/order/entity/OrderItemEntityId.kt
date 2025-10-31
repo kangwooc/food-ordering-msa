@@ -8,12 +8,15 @@ import java.util.*
 
 class OrderItemEntityId(
     @Id
-    var id: UUID? = null,
+    var id: Long? = null,
     @Id
     @ManyToOne
     @JoinColumn(name = "ORDER_ID", nullable = false)
-    var order: OrderEntity,
-): Serializable {
+    var order: OrderEntity? = null,
+) : Serializable {
+    // JPA용 no-arg 생성자
+    constructor() : this(null, null)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

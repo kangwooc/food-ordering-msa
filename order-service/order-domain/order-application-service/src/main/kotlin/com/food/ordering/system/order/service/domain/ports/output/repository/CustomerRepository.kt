@@ -4,5 +4,5 @@ import com.food.ordering.system.order.service.domain.entity.Customer
 import java.util.UUID
 
 interface CustomerRepository {
-    fun findCustomer(customerId: UUID): com.food.ordering.system.order.service.domain.entity.Customer?
+    fun findCustomer(customerId: UUID): Customer?
 }

@@ -3,7 +3,6 @@ package com.food.ordering.system.kafka.producer.service.impl
 import com.food.ordering.system.kafka.producer.exception.KafkaProducerException
 import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import jakarta.annotation.PreDestroy
-import org.apache.avro.specific.SpecificRecordBase
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.KafkaException
 import org.springframework.kafka.core.KafkaTemplate
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component
 import java.io.Serializable
 
 @Component
-class KafkaProducerImpl<K: Serializable, V: SpecificRecordBase>(
+class KafkaProducerImpl<K: Serializable, V>(
     private val kafkaTemplate: KafkaTemplate<K, V>
 ): KafkaProducer<K, V> {
     private val logger = LoggerFactory.getLogger(KafkaProducerImpl::class.java)

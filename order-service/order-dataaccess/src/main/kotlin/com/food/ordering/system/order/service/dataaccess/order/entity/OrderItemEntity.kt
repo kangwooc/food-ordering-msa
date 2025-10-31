@@ -4,12 +4,12 @@ import jakarta.persistence.*
 import java.math.BigDecimal
 import java.util.*
 
-@Table(name = "order_item")
+@Table(name = "order_items")
 @IdClass(OrderItemEntityId::class)
 @Entity
 class OrderItemEntity(
     @Id
-    var id: UUID? = null,
+    var id: Long? = null,
     @Id
     @ManyToOne
     @JoinColumn(name = "ORDER_ID", nullable = false)

@@ -2,7 +2,6 @@ package com.food.ordering.system.kafka.producer
 
 import com.food.ordering.system.kafka.config.data.KafkaConfigData
 import com.food.ordering.system.kafka.config.data.KafkaProducerConfigData
-import org.apache.avro.specific.SpecificRecordBase
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -12,7 +11,7 @@ import org.springframework.kafka.core.ProducerFactory
 import java.io.Serializable
 
 @Configuration
-class KafkaProducerConfig<K: Serializable, V: SpecificRecordBase>(
+class KafkaProducerConfig<K: Serializable, V>(
     private val kafkaProducerConfigData: KafkaProducerConfigData,
     private val kafkaConfigData: KafkaConfigData
 ) {

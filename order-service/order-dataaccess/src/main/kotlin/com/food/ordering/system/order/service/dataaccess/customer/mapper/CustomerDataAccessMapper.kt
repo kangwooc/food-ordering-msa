@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class CustomerDataAccessMapper {
     fun customerEntityToCustomer(customerEntity: CustomerEntity): com.food.ordering.system.order.service.domain.entity.Customer {
-        val customer = com.food.ordering.system.order.service.domain.entity.Customer()
+        val customer = Customer()
         customer.id = CustomerId(customerEntity.id)
         return customer
     }

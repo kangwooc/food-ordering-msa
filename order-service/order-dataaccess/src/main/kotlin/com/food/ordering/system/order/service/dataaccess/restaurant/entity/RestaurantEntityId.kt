@@ -4,9 +4,11 @@ import java.io.Serializable
 import java.util.*
 
 class RestaurantEntityId(
-    val restaurantId: UUID,
-    val productId: UUID
+    var restaurantId: UUID? = null,
+    var productId: UUID? = null
 ): Serializable {
+    constructor() : this(null, null)
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

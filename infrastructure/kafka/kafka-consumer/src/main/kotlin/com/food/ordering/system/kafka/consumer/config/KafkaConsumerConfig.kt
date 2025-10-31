@@ -2,7 +2,6 @@ package com.food.ordering.system.kafka.consumer.config
 
 import com.food.ordering.system.kafka.config.data.KafkaConfigData
 import com.food.ordering.system.kafka.config.data.KafkaConsumerConfigData
-import org.apache.avro.specific.SpecificRecordBase
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,7 +13,7 @@ import org.springframework.kafka.listener.ConcurrentMessageListenerContainer
 import java.io.Serializable
 
 @Configuration
-class KafkaConsumerConfig<K: Serializable, V: SpecificRecordBase>(
+class KafkaConsumerConfig<K: Serializable, V>(
     private val kafkaConsumerConfigData: KafkaConsumerConfigData,
     private val kafkaConfigData: KafkaConfigData
 ) {

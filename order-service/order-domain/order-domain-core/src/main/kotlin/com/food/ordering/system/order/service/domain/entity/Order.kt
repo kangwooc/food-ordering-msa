@@ -11,11 +11,11 @@ import java.util.*
 class Order(
     val customerId: CustomerId,
     val restaurantId: RestaurantId,
-    val deliveryAddress: com.food.ordering.system.order.service.domain.valueobject.StreetAddress,
+    val deliveryAddress: StreetAddress,
     val price: Money,
-    val items: List<com.food.ordering.system.order.service.domain.entity.OrderItem>,
+    val items: List<OrderItem>,
 
-    var trackingId: com.food.ordering.system.order.service.domain.valueobject.TrackingId? = null,
+    var trackingId: TrackingId? = null,
     var orderStatus: OrderStatus = OrderStatus.PENDING,
     var failureMessages: List<String>? = null
 ): AggregateRoot<OrderId>() {
@@ -25,7 +25,7 @@ class Order(
 
     fun initializeOrder() {
         this.id = OrderId(UUID.randomUUID())
-        this.trackingId = com.food.ordering.system.order.service.domain.valueobject.TrackingId(UUID.randomUUID())
+        this.trackingId = TrackingId(UUID.randomUUID())
         initializeOrderItems(this.id)
     }
 
@@ -33,7 +33,7 @@ class Order(
         var itemId = 1L
         this.items.forEach { orderItem ->
             orderItem.initializeOrderItem(orderId,
-                com.food.ordering.system.order.service.domain.valueobject.OrderItemId(itemId)
+                OrderItemId(itemId)
             )
             itemId++
         }
@@ -51,7 +51,7 @@ class Order(
 
     private fun validateTotalPrice() {
         if (!this.price.isGreaterThanZero()) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Total price must be greater than zero.")
+            throw OrderDomainException("Total price must be greater than zero.")
         }
     }
 
@@ -62,33 +62,33 @@ class Order(
         }.fold(Money.ZERO, Money::plus)
 
         if (price != orderTotal) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Total price: ${price.amount} does not match sum of item prices: ${orderTotal.amount}")
+            throw OrderDomainException("Total price: ${price.amount} does not match sum of item prices: ${orderTotal.amount}")
         }
     }
 
-    private fun validateItemPrice(item: com.food.ordering.system.order.service.domain.entity.OrderItem) {
+    private fun validateItemPrice(item: OrderItem) {
         if (!item.isPriceValid()) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order item price: ${item.price.amount} is not valid for product: ${item.product.productId.value}")
+            throw OrderDomainException("Order item price: ${item.price.amount} is not valid for product: ${item.product.productId.value}")
         }
     }
 
     fun pay() {
         if (orderStatus != OrderStatus.PENDING) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for pay operation.")
+            throw OrderDomainException("Order is not in correct state for pay operation.")
         }
         orderStatus = OrderStatus.PAID
     }
 
     fun approve() {
         if (orderStatus != OrderStatus.PAID) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for approve operation.")
+            throw OrderDomainException("Order is not in correct state for approve operation.")
         }
         orderStatus = OrderStatus.APPROVED
     }
 
     fun initCancel(failureMessages: List<String>) {
         if (orderStatus != OrderStatus.PAID) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for initCancel operation.")
+            throw OrderDomainException("Order is not in correct state for initCancel operation.")
         }
         orderStatus = OrderStatus.CANCELLING
         updateFailureMessages(failureMessages)
@@ -96,7 +96,7 @@ class Order(
 
     fun cancel(failureMessages: List<String>) {
         if (!(orderStatus == OrderStatus.PENDING || orderStatus == OrderStatus.CANCELLING)) {
-            throw com.food.ordering.system.order.service.domain.exception.OrderDomainException("Order is not in correct state for cancel operation.")
+            throw OrderDomainException("Order is not in correct state for cancel operation.")
         }
         orderStatus = OrderStatus.CANCELLING
         updateFailureMessages(failureMessages)

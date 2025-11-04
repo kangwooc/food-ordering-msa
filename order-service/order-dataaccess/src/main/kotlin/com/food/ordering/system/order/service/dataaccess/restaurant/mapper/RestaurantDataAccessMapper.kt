@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.dataaccess.restaurant.mapper
 
-import com.food.ordering.commondomain.valueobject.Money
-import com.food.ordering.commondomain.valueobject.ProductId
+import com.food.ordering.system.domain.valueobject.Money
+import com.food.ordering.system.domain.valueobject.ProductId
 import com.food.ordering.system.order.service.dataaccess.restaurant.entity.RestaurantEntity
 import com.food.ordering.system.order.service.dataaccess.restaurant.exception.RestaurantDataAccessException
 import com.food.ordering.system.order.service.domain.entity.Restaurant
@@ -20,9 +20,9 @@ class RestaurantDataAccessMapper {
 
         val restaurantProducts = restaurantEntities.map {
             com.food.ordering.system.order.service.domain.entity.Product(
-                productId = ProductId(it.productId!!),
+                productId = com.food.ordering.system.domain.valueobject.ProductId(it.productId!!),
                 name = it.productName,
-                price = Money(it.productPrice)
+                price = com.food.ordering.system.domain.valueobject.Money(it.productPrice)
             )
         }
         

@@ -1,6 +1,8 @@
 package com.food.ordering.system.order.service.dataaccess.order.mapper
 
-import com.food.ordering.commondomain.valueobject.*
+import com.food.ordering.system.domain.valueobject.CustomerId
+import com.food.ordering.system.domain.valueobject.OrderId
+import com.food.ordering.system.domain.valueobject.RestaurantId
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderAddressEntity
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderEntity
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderItemEntity
@@ -56,7 +58,7 @@ class OrderDataAccessMapper {
             customerId = CustomerId(orderEntity.customerId),
             restaurantId = RestaurantId(orderEntity.restaurantId),
             deliveryAddress = orderAddressEntityToStreetAddress(orderEntity.address),
-            price = Money(orderEntity.price),
+            price = com.food.ordering.system.domain.valueobject.Money(orderEntity.price),
             items = orderItemEntitiesToOrderItems(orderEntity.items),
             trackingId = com.food.ordering.system.order.service.domain.valueobject.TrackingId(orderEntity.trackingId),
             orderStatus = orderEntity.orderStatus,
@@ -81,12 +83,12 @@ class OrderDataAccessMapper {
             val item = com.food.ordering.system.order.service.domain.entity.OrderItem(
                 orderId = OrderId(itemEntity.order!!.id),
                 product = com.food.ordering.system.order.service.domain.entity.Product(
-                    productId = ProductId(itemEntity.productId),
-                    price = Money(itemEntity.price)
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(itemEntity.productId),
+                    price = com.food.ordering.system.domain.valueobject.Money(itemEntity.price)
                 ),
                 quantity = itemEntity.quantity,
-                price = Money(itemEntity.price),
-                subTotal = Money(itemEntity.subTotal)
+                price = com.food.ordering.system.domain.valueobject.Money(itemEntity.price),
+                subTotal = com.food.ordering.system.domain.valueobject.Money(itemEntity.subTotal)
             )
             items.add(item)
         }

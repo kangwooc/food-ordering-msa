@@ -1,6 +1,6 @@
 package com.food.ordering.system.order.service.dataaccess.order.entity
 
-import com.food.ordering.commondomain.valueobject.OrderStatus
+import com.food.ordering.system.domain.valueobject.OrderStatus
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.util.*

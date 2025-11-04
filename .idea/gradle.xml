@@ -31,8 +31,8 @@
             <option value="$PROJECT_DIR$/payment-service/payment-container" />
             <option value="$PROJECT_DIR$/payment-service/payment-dataaccess" />
             <option value="$PROJECT_DIR$/payment-service/payment-domain" />
+            <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-application-service" />
             <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-core" />
-            <option value="$PROJECT_DIR$/payment-service/payment-domain/payment-domain-service" />
             <option value="$PROJECT_DIR$/payment-service/payment-messaging" />
           </set>
         </option>

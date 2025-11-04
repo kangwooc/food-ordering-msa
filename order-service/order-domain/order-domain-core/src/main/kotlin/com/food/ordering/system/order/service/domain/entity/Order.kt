@@ -1,7 +1,10 @@
 package com.food.ordering.system.order.service.domain.entity
 
-import com.food.ordering.commondomain.entity.AggregateRoot
-import com.food.ordering.commondomain.valueobject.*
+import com.food.ordering.system.domain.entity.AggregateRoot
+import com.food.ordering.system.domain.valueobject.CustomerId
+import com.food.ordering.system.domain.valueobject.OrderId
+import com.food.ordering.system.domain.valueobject.OrderStatus
+import com.food.ordering.system.domain.valueobject.RestaurantId
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId
@@ -12,7 +15,7 @@ class Order(
     val customerId: CustomerId,
     val restaurantId: RestaurantId,
     val deliveryAddress: StreetAddress,
-    val price: Money,
+    val price: com.food.ordering.system.domain.valueobject.Money,
     val items: List<OrderItem>,
 
     var trackingId: TrackingId? = null,
@@ -59,7 +62,7 @@ class Order(
         val orderTotal = items.map { item ->
             validateItemPrice(item)
             item.subTotal
-        }.fold(Money.ZERO, Money::plus)
+        }.fold(com.food.ordering.system.domain.valueobject.Money.ZERO, com.food.ordering.system.domain.valueobject.Money::plus)
 
         if (price != orderTotal) {
             throw OrderDomainException("Total price: ${price.amount} does not match sum of item prices: ${orderTotal.amount}")

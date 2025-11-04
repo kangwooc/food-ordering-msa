@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.domain
 
+import com.food.ordering.system.domain.DomainConstant.Companion.UTC
 import com.food.ordering.system.order.service.domain.entity.Order
 import com.food.ordering.system.order.service.domain.entity.Restaurant
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
@@ -12,7 +13,6 @@ import java.time.ZonedDateTime
 
 class OrderDomainServiceImpl: com.food.ordering.system.order.service.domain.OrderDomainService {
     private val logger = LoggerFactory.getLogger(OrderDomainServiceImpl::class.java)
-    private val UTC = "UTC"
 
     override fun validateAndInitiateOrder(order: Order, restaurant: Restaurant): OrderCreatedEvent {
         validateRestaurant(restaurant)

@@ -1,4 +1,4 @@
-package com.food.ordering.commondomain.valueobject
+package com.food.ordering.system.domain.valueobject
 
 abstract class BaseId<T> protected constructor(
     id: T

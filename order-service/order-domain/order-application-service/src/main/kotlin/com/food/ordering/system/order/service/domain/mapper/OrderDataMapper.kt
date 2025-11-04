@@ -1,6 +1,8 @@
 package com.food.ordering.system.order.service.domain.mapper
 
-import com.food.ordering.commondomain.valueobject.*
+import com.food.ordering.system.domain.valueobject.CustomerId
+import com.food.ordering.system.domain.valueobject.OrderId
+import com.food.ordering.system.domain.valueobject.RestaurantId
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse
 import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse
@@ -18,10 +20,10 @@ class OrderDataMapper {
             products = command.items.map { item ->
                 val product = Product(
                     name = "",
-                    price = Money(item.price),
-                    productId = ProductId(item.productId)
+                    price = com.food.ordering.system.domain.valueobject.Money(item.price),
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(item.productId)
                 )
-                product.id = ProductId(item.productId)
+                product.id = com.food.ordering.system.domain.valueobject.ProductId(item.productId)
                 product
             },
             active = true
@@ -42,7 +44,7 @@ class OrderDataMapper {
                 city = command.address.city,
                 postalCode = command.address.postalCode,
             ),
-            price = Money(command.price),
+            price = com.food.ordering.system.domain.valueobject.Money(command.price),
             items = createOrderItemsToOrderItemEntities(orderId, command.items),
         )
         order.id = orderId
@@ -53,15 +55,15 @@ class OrderDataMapper {
         return orderItem.map { item ->
             val orderItemEntity = OrderItem(
                 product = Product(
-                    price = Money(item.price),
-                    productId = ProductId(item.productId)
+                    price = com.food.ordering.system.domain.valueobject.Money(item.price),
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(item.productId)
                 ),
                 quantity = item.quantity,
-                price = Money(item.price),
-                subTotal = Money(item.subTotal),
+                price = com.food.ordering.system.domain.valueobject.Money(item.price),
+                subTotal = com.food.ordering.system.domain.valueobject.Money(item.subTotal),
                 orderId = orderId
             )
-            orderItemEntity.product.id = ProductId(item.productId)
+            orderItemEntity.product.id = com.food.ordering.system.domain.valueobject.ProductId(item.productId)
             orderItemEntity
         }
     }

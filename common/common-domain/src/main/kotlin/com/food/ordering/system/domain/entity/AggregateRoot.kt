@@ -1,4 +1,4 @@
-package com.food.ordering.commondomain.entity
+package com.food.ordering.system.domain.entity
 
 abstract class AggregateRoot<ID>: BaseEntity<ID>() {
 }

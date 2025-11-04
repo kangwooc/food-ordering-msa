@@ -137,13 +137,13 @@ class OrderApplicationServiceTest @Autowired constructor(
             products = listOf(
                 Product(
                     name = "product-1",
-                    price = Money(BigDecimal("50.00")),
-                    productId = ProductId(PRODUCT_ID)
+                    price = com.food.ordering.system.domain.valueobject.Money(BigDecimal("50.00")),
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(PRODUCT_ID)
                 ),
                 Product(
                     name = "product-2",
-                    price = Money(BigDecimal("50.00")),
-                    productId = ProductId(PRODUCT_ID)
+                    price = com.food.ordering.system.domain.valueobject.Money(BigDecimal("50.00")),
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(PRODUCT_ID)
                 )
             )
         )
@@ -192,13 +192,13 @@ class OrderApplicationServiceTest @Autowired constructor(
             products = listOf(
                 Product(
                     name = "product-1",
-                    price = Money(BigDecimal("50.00")),
-                    productId = ProductId(PRODUCT_ID)
+                    price = com.food.ordering.system.domain.valueobject.Money(BigDecimal("50.00")),
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(PRODUCT_ID)
                 ),
                 Product(
                     name = "product-2",
-                    price = Money(BigDecimal("50.00")),
-                    productId = ProductId(PRODUCT_ID)
+                    price = com.food.ordering.system.domain.valueobject.Money(BigDecimal("50.00")),
+                    productId = com.food.ordering.system.domain.valueobject.ProductId(PRODUCT_ID)
                 )
             )
         )

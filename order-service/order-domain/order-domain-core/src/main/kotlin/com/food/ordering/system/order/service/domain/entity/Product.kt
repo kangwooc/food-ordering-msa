@@ -1,11 +1,11 @@
 package com.food.ordering.system.order.service.domain.entity
 
-import com.food.ordering.commondomain.entity.BaseEntity
-import com.food.ordering.commondomain.valueobject.Money
-import com.food.ordering.commondomain.valueobject.ProductId
+import com.food.ordering.system.domain.entity.BaseEntity
+import com.food.ordering.system.domain.valueobject.Money
+import com.food.ordering.system.domain.valueobject.ProductId
 
 class Product(
-    val productId: ProductId,
+    val productId: com.food.ordering.system.domain.valueobject.ProductId,
     var name: String? = null,
     var price: Money
 ): BaseEntity<ProductId>() {

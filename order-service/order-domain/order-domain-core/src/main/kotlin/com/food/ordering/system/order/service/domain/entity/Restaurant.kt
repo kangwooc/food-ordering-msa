@@ -1,7 +1,7 @@
 package com.food.ordering.system.order.service.domain.entity
 
-import com.food.ordering.commondomain.entity.AggregateRoot
-import com.food.ordering.commondomain.valueobject.RestaurantId
+import com.food.ordering.system.domain.entity.AggregateRoot
+import com.food.ordering.system.domain.valueobject.RestaurantId
 
 class Restaurant(
     var products: List<com.food.ordering.system.order.service.domain.entity.Product>,

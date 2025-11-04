@@ -1,8 +1,16 @@
+@file:OptIn(
+    InternalAvro4kApi::class,
+    ExperimentalAvro4kApi::class,
+)
+
 package com.food.ordering.system.kafka.order.avro.model
 
+import com.github.avrokotlin.avro4k.ExperimentalAvro4kApi
+import com.github.avrokotlin.avro4k.InternalAvro4kApi
 import com.github.avrokotlin.avro4k.`internal`.AvroGenerated
 import com.github.avrokotlin.avro4k.serializer.UUIDSerializer
 import java.util.UUID
+import kotlin.OptIn
 import kotlin.String
 import kotlinx.serialization.Serializable
 

@@ -2,6 +2,7 @@ plugins {
     kotlin("plugin.serialization")
     kotlin("kapt")
 
+    // Pin plugin versions for stable behavior
     id("com.github.davidmc24.gradle.plugin.avro")
     id("io.github.avro-kotlin")
 }
@@ -11,14 +12,14 @@ dependencies {
     api("org.springframework.kafka:spring-kafka")
 
     // avro
-    implementation("tools.jackson.dataformat:jackson-dataformat-avro:3.0.1")
-
-    implementation("com.github.avro-kotlin.avro4k:avro4k-core:2.6.0")
-    implementation("com.github.avro-kotlin.avro4k:avro4k-kotlin-generator:2.6.0")
+    implementation("com.github.avro-kotlin.avro4k:avro4k-core")
+    implementation("com.github.avro-kotlin.avro4k:avro4k-kotlin-generator")
     api("com.github.avro-kotlin.avro4k:avro4k-confluent-kafka-serializer:2.6.0")
 
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3")
 }
 
 avro {
@@ -28,13 +29,19 @@ avro {
 
 avro4k {
     sourcesGeneration {
-        inputSchemas.from(sourceSets.main.get().allSource)
-        outputDir.set(file("src/main/kotlin"))
+        // Use explicit avro resources folder to avoid early-evaluation issues
+        inputSchemas.from(file("src/main/resources/avro"))
+        // Put generated sources directly into the project's source directory as requested,
+        // but use the lazy project layout provider to avoid MissingValueException.
+        outputDir.set(layout.projectDirectory.dir("src/main/kotlin"))
     }
 }
 
 sourceSets {
     main {
+        kotlin {
+            srcDirs("src/main/kotlin")
+        }
         resources {
             srcDirs("src/main/resources/avro")
         }

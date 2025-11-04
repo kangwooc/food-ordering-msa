@@ -8,7 +8,7 @@ plugins {
     val springBootVersion = "3.5.7"
     val springDependencyManagementVersion = "1.1.7"
     val avroVersion = "1.9.1"
-    val avroKotlinVersion = "2.5.3"
+    val avroKotlinVersion = "2.6.0"
 
     kotlin("jvm") version kotlinVersion apply false
     kotlin("plugin.spring") version kotlinVersion apply false
@@ -34,6 +34,16 @@ allprojects {
             freeCompilerArgs.addAll("-Xjsr305=strict")
         }
     }
+
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.7.3")
+        }
+    }
 }
 
 subprojects {
@@ -41,6 +51,12 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.plugin.spring")
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
+
+    the<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension>().apply {
+        imports {
+            mavenBom("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.7.3")
+        }
+    }
 
     plugins.withId("org.jetbrains.kotlin.jvm") {
         // kotlin 확장을 타입으로 꺼내서 설정

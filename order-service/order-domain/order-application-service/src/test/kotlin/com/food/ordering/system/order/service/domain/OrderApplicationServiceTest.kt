@@ -8,6 +8,7 @@ import com.food.ordering.system.order.service.domain.dto.create.OrderAddress
 import com.food.ordering.system.order.service.domain.dto.create.OrderItem
 import com.food.ordering.system.order.service.domain.entity.Order
 import com.food.ordering.system.order.service.domain.entity.Restaurant
+import com.food.ordering.system.order.service.domain.exception.OrderDomainException
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper
 import com.food.ordering.system.order.service.domain.ports.input.service.OrderApplicationService
 import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository
@@ -189,12 +190,12 @@ class OrderApplicationServiceTest @Autowired constructor(
         val inactiveRestaurant = Restaurant(
             active = false,
             products = listOf(
-                com.food.ordering.system.order.service.domain.entity.Product(
+                Product(
                     name = "product-1",
                     price = Money(BigDecimal("50.00")),
                     productId = ProductId(PRODUCT_ID)
                 ),
-                com.food.ordering.system.order.service.domain.entity.Product(
+                Product(
                     name = "product-2",
                     price = Money(BigDecimal("50.00")),
                     productId = ProductId(PRODUCT_ID)
@@ -205,7 +206,7 @@ class OrderApplicationServiceTest @Autowired constructor(
 
         `when`(restaurantRepository.findRestaurantInformation(any<Restaurant>())).thenReturn(inactiveRestaurant)
 
-        val exception = assertThrows(com.food.ordering.system.order.service.domain.exception.OrderDomainException::class.java) {
+        val exception = assertThrows(OrderDomainException::class.java) {
             orderApplicationService.createOrder(createOrderCommand!!)
         }
 

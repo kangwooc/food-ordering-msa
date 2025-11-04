@@ -10,5 +10,5 @@ class CreditHistory(
     val customerId: CustomerId,
     val amount: Money,
     val transactionType: TransactionType
-): BaseEntity<CreditHistoryId> {
+): BaseEntity<CreditHistoryId>() {
 }

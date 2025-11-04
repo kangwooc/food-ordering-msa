@@ -1,5 +1,12 @@
+@file:OptIn(
+    InternalAvro4kApi::class,
+    ExperimentalAvro4kApi::class,
+)
+
 package com.food.ordering.system.kafka.order.avro.model
 
+import com.github.avrokotlin.avro4k.ExperimentalAvro4kApi
+import com.github.avrokotlin.avro4k.InternalAvro4kApi
 import com.github.avrokotlin.avro4k.`internal`.AvroGenerated
 import com.github.avrokotlin.avro4k.serializer.BigDecimalSerializer
 import com.github.avrokotlin.avro4k.serializer.InstantSerializer
@@ -7,6 +14,7 @@ import com.github.avrokotlin.avro4k.serializer.UUIDSerializer
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.UUID
+import kotlin.OptIn
 import kotlin.collections.List
 import kotlin.collections.emptyList
 import kotlinx.serialization.Serializable

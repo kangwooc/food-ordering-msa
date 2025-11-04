@@ -11,6 +11,8 @@ dependencies {
     implementation(project(":common:common-domain"))
 
     implementation("org.springframework.boot:spring-boot-starter")
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
 }

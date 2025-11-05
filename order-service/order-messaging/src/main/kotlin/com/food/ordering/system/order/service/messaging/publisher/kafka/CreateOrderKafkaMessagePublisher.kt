@@ -2,6 +2,7 @@ package com.food.ordering.system.order.service.messaging.publisher.kafka
 
 import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel
+import com.food.ordering.system.kafka.producer.KafkaMessageHelper
 import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper
@@ -13,7 +14,7 @@ class CreateOrderKafkaMessagePublisher(
     private val orderMessagingDataMapper: OrderMessagingDataMapper,
     private val orderServiceConfigData: OrderServiceConfigData,
     private val kafkaProducer: KafkaProducer<String, PaymentRequestAvroModel>,
-    private val orderKafkaMessageHelper: OrderKafkaMessageHelper
+    private val kafkaMessageHelper: KafkaMessageHelper
 ) : OrderCreatedPaymentRequestMessagePublisher {
 
     private val logger = LoggerFactory.getLogger(CreateOrderKafkaMessagePublisher::class.java)
@@ -27,7 +28,7 @@ class CreateOrderKafkaMessagePublisher(
                 orderServiceConfigData.paymentRequestTopicName!!,
                 orderId,
                 paymentRequestAvroModel,
-                orderKafkaMessageHelper.getKafkaCallback(
+                kafkaMessageHelper.getKafkaCallback(
                     orderServiceConfigData.paymentRequestTopicName!!,
                     paymentRequestAvroModel,
                     orderId

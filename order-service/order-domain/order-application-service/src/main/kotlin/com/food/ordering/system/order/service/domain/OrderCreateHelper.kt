@@ -6,6 +6,7 @@ import com.food.ordering.system.order.service.domain.entity.Restaurant
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException
 import com.food.ordering.system.order.service.domain.mapper.OrderDataMapper
+import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher
 import com.food.ordering.system.order.service.domain.ports.output.repository.CustomerRepository
 import com.food.ordering.system.order.service.domain.ports.output.repository.OrderRepository
 import com.food.ordering.system.order.service.domain.ports.output.repository.RestaurantRepository
@@ -21,6 +22,7 @@ class OrderCreateHelper(
     private val customerRepository: CustomerRepository,
     private val restaurantRepository: RestaurantRepository,
     private val orderDataMapper: OrderDataMapper,
+    private val orderCreatedPaymentRequestMessagePublisher: OrderCreatedPaymentRequestMessagePublisher
 ) {
     private val logger = LoggerFactory.getLogger(OrderCreateHelper::class.java)
 
@@ -29,7 +31,8 @@ class OrderCreateHelper(
         checkCustomer(command.customerId)
         val restaurant = checkRestaurant(command)
         val order = orderDataMapper.createOrderCommandToOrder(command)
-        val orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant)
+        val orderCreatedEvent =
+            orderDomainService.validateAndInitiateOrder(order, restaurant, orderCreatedPaymentRequestMessagePublisher)
         saveOrder(orderCreatedEvent)
         logger.info("saving order ${order.id}")
         return orderCreatedEvent
@@ -45,11 +48,11 @@ class OrderCreateHelper(
 
     private fun checkRestaurant(command: CreateOrderCommand): Restaurant {
         val restaurant = orderDataMapper.createOrderCommandToRestaurant(command)
-//        val optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant)
-//        if (optionalRestaurant == null) {
-//            logger.warn("Restaurant with id ${restaurant.id.value} not found")
-//            throw OrderDomainException("Restaurant with id ${restaurant.id.value} not found")
-//        }
+        val optionalRestaurant = restaurantRepository.findRestaurantInformation(restaurant)
+        if (optionalRestaurant == null) {
+            logger.warn("Restaurant with id ${restaurant.id.value} not found")
+            throw OrderDomainException("Restaurant with id ${restaurant.id.value} not found")
+        }
 
         return restaurant
     }

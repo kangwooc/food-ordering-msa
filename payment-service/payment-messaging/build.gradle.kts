@@ -1,21 +1,10 @@
-plugins {
-    kotlin("jvm")
-}
-
-group = "com.food.ordering"
-version = "unspecified"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    testImplementation(kotlin("test"))
-}
+    implementation(project(":payment-service:payment-domain:payment-application-service"))
+    implementation(project(":infrastructure:kafka:kafka-producer"))
+    implementation(project(":infrastructure:kafka:kafka-consumer"))
+    implementation(project(":infrastructure:kafka:kafka-model"))
 
-tasks.test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
+    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

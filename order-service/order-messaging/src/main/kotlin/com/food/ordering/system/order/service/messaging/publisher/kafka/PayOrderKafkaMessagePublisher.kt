@@ -2,6 +2,7 @@ package com.food.ordering.system.order.service.messaging.publisher.kafka
 
 import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel
+import com.food.ordering.system.kafka.producer.KafkaMessageHelper
 import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.restaurantapproval.OrderPaidRestaurantRequestMessagePublisher
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class PayOrderKafkaMessagePublisher(
-    private val orderKafkaMessageHelper: OrderKafkaMessageHelper,
+    private val kafkaMessageHelper: KafkaMessageHelper,
     private val orderMessagingDataMapper: OrderMessagingDataMapper,
     private val orderServiceConfigData: OrderServiceConfigData,
     private val kafkaProducer: KafkaProducer<String, RestaurantApprovalRequestAvroModel>
@@ -26,7 +27,7 @@ class PayOrderKafkaMessagePublisher(
                 orderServiceConfigData.restaurantApprovalRequestTopicName!!,
                 orderId,
                 restaurantApprovalRequestAvroModel,
-                orderKafkaMessageHelper.getKafkaCallback(
+                kafkaMessageHelper.getKafkaCallback(
                     orderServiceConfigData.restaurantApprovalRequestTopicName!!,
                     restaurantApprovalRequestAvroModel,
                     orderId

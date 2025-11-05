@@ -1,6 +1,7 @@
 package com.food.ordering.system.order.service.domain
 
 import com.food.ordering.system.domain.DomainConstant.Companion.UTC
+import com.food.ordering.system.domain.event.publisher.DomainEventPublisher
 import com.food.ordering.system.order.service.domain.entity.Order
 import com.food.ordering.system.order.service.domain.entity.Restaurant
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
@@ -11,10 +12,14 @@ import org.slf4j.LoggerFactory
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
-class OrderDomainServiceImpl: com.food.ordering.system.order.service.domain.OrderDomainService {
+class OrderDomainServiceImpl : OrderDomainService {
     private val logger = LoggerFactory.getLogger(OrderDomainServiceImpl::class.java)
 
-    override fun validateAndInitiateOrder(order: Order, restaurant: Restaurant): OrderCreatedEvent {
+    override fun validateAndInitiateOrder(
+        order: Order,
+        restaurant: Restaurant,
+        orderCreatedEventPublisher: DomainEventPublisher<OrderCreatedEvent>
+    ): OrderCreatedEvent {
         validateRestaurant(restaurant)
         setOrderProductInformation(order, restaurant)
         order.validateOrder()
@@ -24,17 +29,19 @@ class OrderDomainServiceImpl: com.food.ordering.system.order.service.domain.Orde
 
         return OrderCreatedEvent(
             order,
-            ZonedDateTime.now(ZoneId.of(UTC))
+            ZonedDateTime.now(ZoneId.of(UTC)),
+            orderCreatedEventPublisher
         )
     }
 
-    override fun payOrder(order: Order): OrderPaidEvent {
+    override fun payOrder(order: Order, orderPaidEventPublisher: DomainEventPublisher<OrderPaidEvent>): OrderPaidEvent {
         order.pay()
         logger.info("Order ${order.id.value} paid")
 
         return OrderPaidEvent(
             order,
-            ZonedDateTime.now(ZoneId.of(UTC))
+            ZonedDateTime.now(ZoneId.of(UTC)),
+            orderPaidEventPublisher
         )
     }
 
@@ -43,11 +50,15 @@ class OrderDomainServiceImpl: com.food.ordering.system.order.service.domain.Orde
         logger.info("Order ${order.id.value} approved")
     }
 
-    override fun cancelOrderPayment(order: Order, failureMessages: List<String>): OrderCancelledEvent {
+    override fun cancelOrderPayment(
+        order: Order,
+        failureMessages: List<String>,
+        orderCancelledEventPublisher: DomainEventPublisher<OrderCancelledEvent>
+    ): OrderCancelledEvent {
         order.initCancel(failureMessages)
         logger.info("Order ${order.id.value} cancelling payment")
 
-        return OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC)))
+        return OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC)), orderCancelledEventPublisher)
     }
 
     override fun cancelOrder(order: Order, failureMessages: List<String>) {

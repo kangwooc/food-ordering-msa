@@ -1,0 +1,46 @@
+package com.food.ordering.system.payment.service.messaging.publisher.kafka
+
+import com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel
+import com.food.ordering.system.kafka.producer.KafkaMessageHelper
+import com.food.ordering.system.kafka.producer.service.KafkaProducer
+import com.food.ordering.system.payment.service.domain.config.PaymentServiceConfigData
+import com.food.ordering.system.payment.service.domain.event.PaymentCancelledEvent
+import com.food.ordering.system.payment.service.domain.event.PaymentCompletedEvent
+import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentCancelledMessagePublisher
+import com.food.ordering.system.payment.service.domain.ports.output.message.publisher.PaymentCompletedMessagePublisher
+import com.food.ordering.system.payment.service.messaging.mapper.PaymentMessagingDataMapper
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
+
+@Component
+class PaymentCancelledKafkaMessagePublisher(
+    private val paymentMessagingDataMapper: PaymentMessagingDataMapper,
+    private val paymentKafkaProducer: KafkaProducer<String, PaymentResponseAvroModel>,
+    private val paymentServiceConfigData: PaymentServiceConfigData,
+    private val kafkaMessageHelper: KafkaMessageHelper
+): PaymentCancelledMessagePublisher {
+    private val logger = LoggerFactory.getLogger(PaymentCancelledKafkaMessagePublisher::class.java)
+
+    override fun publish(domainEvent: PaymentCancelledEvent) {
+        val orderId = domainEvent.payment.orderId.value.toString()
+        logger.info("Publishing payment completed event for order id: $orderId")
+        val paymentResponseAvroModel =
+            paymentMessagingDataMapper.paymentCancelledEventToPaymentResponseAvroModel(domainEvent)
+        try {
+            paymentKafkaProducer.send(
+                paymentServiceConfigData.paymentResponseTopicName!!,
+                orderId,
+                paymentResponseAvroModel,
+                kafkaMessageHelper.getKafkaCallback(
+                    paymentServiceConfigData.paymentRequestTopicName!!,
+                    paymentResponseAvroModel,
+                    orderId
+                )
+            )
+
+            logger.info("Payment completed event for order id: $orderId")
+        } catch (e: Exception) {
+            logger.error("Error while publishing payment completed event for order id: $orderId, error: ${e.message}")
+        }
+    }
+}

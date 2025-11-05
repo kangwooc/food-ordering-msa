@@ -1,12 +1,12 @@
-package com.food.ordering.system.order.service.messaging.publisher.kafka
+package com.food.ordering.system.kafka.producer
 
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.support.SendResult
 import org.springframework.stereotype.Component
 
 @Component
-class OrderKafkaMessageHelper {
-    private val logger = LoggerFactory.getLogger(OrderKafkaMessageHelper::class.java)
+class KafkaMessageHelper {
+    private val logger = LoggerFactory.getLogger(KafkaMessageHelper::class.java)
 
     fun<T> getKafkaCallback(
         topicName: String,

@@ -1,5 +1,6 @@
 package com.food.ordering.system.order.service.domain
 
+import com.food.ordering.system.domain.event.publisher.DomainEventPublisher
 import com.food.ordering.system.order.service.domain.entity.Order
 import com.food.ordering.system.order.service.domain.entity.Restaurant
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
@@ -18,13 +19,21 @@ import com.food.ordering.system.order.service.domain.event.OrderPaidEvent
 // 도메인에서 어플리케이션의 세부 구현으로의 의존성을 줄여줍니다.
 // 이렇게 하면 도메인 로직이 변경되더라도 어플리케이션 서비스는 영향을 받지 않게 됩니다.
 interface OrderDomainService {
-    fun validateAndInitiateOrder(order: Order, restaurant: Restaurant): OrderCreatedEvent
+    fun validateAndInitiateOrder(
+        order: Order,
+        restaurant: Restaurant,
+        orderCreatedEventPublisher: DomainEventPublisher<OrderCreatedEvent>
+    ): OrderCreatedEvent
 
-    fun payOrder(order: Order): OrderPaidEvent
+    fun payOrder(order: Order, orderPaidEventPublisher: DomainEventPublisher<OrderPaidEvent>): OrderPaidEvent
 
     fun approveOrder(order: Order)
 
-    fun cancelOrderPayment(order: Order, failureMessages: List<String>): OrderCancelledEvent
+    fun cancelOrderPayment(
+        order: Order,
+        failureMessages: List<String>,
+        orderCancelledEventPublisher: DomainEventPublisher<OrderCancelledEvent>
+    ): OrderCancelledEvent
 
     fun cancelOrder(order: Order, failureMessages: List<String>)
 }

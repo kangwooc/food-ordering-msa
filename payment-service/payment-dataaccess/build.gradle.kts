@@ -1,21 +1,15 @@
 plugins {
-    kotlin("jvm")
-}
-
-group = "com.food.ordering"
-version = "unspecified"
-
-repositories {
-    mavenCentral()
+    kotlin("plugin.jpa")
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation(project(":payment-service:payment-domain:payment-application-service"))
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("org.postgresql:postgresql")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(21)
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.MappedSuperclass")
+    annotation("jakarta.persistence.Embeddable")
 }

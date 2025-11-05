@@ -7,5 +7,4 @@ import java.time.ZonedDateTime
 abstract class OrderEvent(
     val order: Order,
     val createdAt: ZonedDateTime
-): DomainEvent<Order> {
-}
+): DomainEvent<Order>

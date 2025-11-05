@@ -2,6 +2,7 @@ package com.food.ordering.system.order.service.messaging.publisher.kafka
 
 import com.food.ordering.system.kafka.producer.service.KafkaProducer
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel
+import com.food.ordering.system.kafka.producer.KafkaMessageHelper
 import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCancelledPaymentRequestMessagePublisher
@@ -14,7 +15,7 @@ class CancelOrderKafkaMessagePublisher(
     private val orderMessagingDataMapper: OrderMessagingDataMapper,
     private val orderServiceConfigData: OrderServiceConfigData,
     private val kafkaProducer: KafkaProducer<String, PaymentRequestAvroModel>,
-    private val orderKafkaMessageHelper: OrderKafkaMessageHelper
+    private val kafkaMessageHelper: KafkaMessageHelper
 ): OrderCancelledPaymentRequestMessagePublisher {
     private val logger = LoggerFactory.getLogger(CancelOrderKafkaMessagePublisher::class.java)
 
@@ -28,7 +29,7 @@ class CancelOrderKafkaMessagePublisher(
                 orderServiceConfigData.paymentRequestTopicName!!,
                 orderId,
                 paymentRequestAvroModel,
-                orderKafkaMessageHelper.getKafkaCallback(
+                kafkaMessageHelper.getKafkaCallback(
                     orderServiceConfigData.paymentRequestTopicName!!,
                     paymentRequestAvroModel,
                     orderId

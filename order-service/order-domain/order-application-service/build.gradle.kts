@@ -8,6 +8,7 @@ plugins {
 dependencies {
     api(project(":order-service:order-domain:order-domain-core"))
     api(project(":common:common-domain"))
+    implementation(project(":infrastructure:saga"))
 
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-validation")

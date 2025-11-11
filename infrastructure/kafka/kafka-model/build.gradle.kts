@@ -16,10 +16,10 @@ dependencies {
     implementation("com.github.avro-kotlin.avro4k:avro4k-kotlin-generator")
     api("com.github.avro-kotlin.avro4k:avro4k-confluent-kafka-serializer:2.6.0")
 
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
-    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.9.0")
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.9.0")
 }
 
 avro {

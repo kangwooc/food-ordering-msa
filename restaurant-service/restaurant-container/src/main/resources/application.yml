@@ -43,7 +43,7 @@ kafka-config:
 
 kafka-producer-config:
   key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
+  value-serializer-class: com.github.avrokotlin.avro4k.kafka.confluent.GenericAvro4kKafkaSerializer
   compression-type: none
   acks: all
   batch-size: 16384
@@ -54,7 +54,7 @@ kafka-producer-config:
 
 kafka-consumer-config:
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-  value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+  value-deserializer: com.github.avrokotlin.avro4k.kafka.confluent.ReflectAvro4kKafkaDeserializer
   restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader

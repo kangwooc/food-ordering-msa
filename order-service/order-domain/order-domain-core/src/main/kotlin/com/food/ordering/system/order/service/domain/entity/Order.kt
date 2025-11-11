@@ -1,10 +1,7 @@
 package com.food.ordering.system.order.service.domain.entity
 
 import com.food.ordering.system.domain.entity.AggregateRoot
-import com.food.ordering.system.domain.valueobject.CustomerId
-import com.food.ordering.system.domain.valueobject.OrderId
-import com.food.ordering.system.domain.valueobject.OrderStatus
-import com.food.ordering.system.domain.valueobject.RestaurantId
+import com.food.ordering.system.domain.valueobject.*
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId
@@ -15,7 +12,7 @@ class Order(
     val customerId: CustomerId,
     val restaurantId: RestaurantId,
     val deliveryAddress: StreetAddress,
-    val price: com.food.ordering.system.domain.valueobject.Money,
+    val price: Money,
     val items: List<OrderItem>,
 
     var trackingId: TrackingId? = null,

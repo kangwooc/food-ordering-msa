@@ -7,6 +7,9 @@ import com.food.ordering.system.order.service.dataaccess.order.entity.OrderAddre
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderEntity
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderItemEntity
 import com.food.ordering.system.order.service.domain.entity.Order
+import com.food.ordering.system.order.service.domain.entity.OrderItem
+import com.food.ordering.system.order.service.domain.valueobject.StreetAddress
+import com.food.ordering.system.order.service.domain.valueobject.TrackingId
 import org.springframework.stereotype.Component
 
 @Component
@@ -29,7 +32,7 @@ class OrderDataAccessMapper {
         return orderEntity
     }
 
-    private fun deliveryAddressToOrderAddressEntity(deliveryAddress: com.food.ordering.system.order.service.domain.valueobject.StreetAddress): OrderAddressEntity {
+    private fun deliveryAddressToOrderAddressEntity(deliveryAddress: StreetAddress): OrderAddressEntity {
         return OrderAddressEntity(
             id = deliveryAddress.id,
             street = deliveryAddress.street,
@@ -38,7 +41,7 @@ class OrderDataAccessMapper {
         )
     }
 
-    private fun orderItemsToOrderItemEntities(items: List<com.food.ordering.system.order.service.domain.entity.OrderItem>): MutableList<OrderItemEntity> {
+    private fun orderItemsToOrderItemEntities(items: List<OrderItem>): MutableList<OrderItemEntity> {
         val itemEntities = mutableListOf<OrderItemEntity>()
         items.forEach { item ->
             val itemEntity = OrderItemEntity(
@@ -60,7 +63,7 @@ class OrderDataAccessMapper {
             deliveryAddress = orderAddressEntityToStreetAddress(orderEntity.address),
             price = com.food.ordering.system.domain.valueobject.Money(orderEntity.price),
             items = orderItemEntitiesToOrderItems(orderEntity.items),
-            trackingId = com.food.ordering.system.order.service.domain.valueobject.TrackingId(orderEntity.trackingId),
+            trackingId = TrackingId(orderEntity.trackingId),
             orderStatus = orderEntity.orderStatus,
             failureMessages = orderEntity.failureMessages?.split(Order.FAILURE_MESSAGE_DELIMITER)
         )
@@ -69,7 +72,7 @@ class OrderDataAccessMapper {
     }
 
     private fun orderAddressEntityToStreetAddress(addressEntity: OrderAddressEntity): com.food.ordering.system.order.service.domain.valueobject.StreetAddress {
-        return com.food.ordering.system.order.service.domain.valueobject.StreetAddress(
+        return StreetAddress(
             id = addressEntity.id,
             street = addressEntity.street,
             postalCode = addressEntity.postalCode,

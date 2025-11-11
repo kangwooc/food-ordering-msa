@@ -1,5 +1,6 @@
 package com.food.ordering.system.payment.service.messaging.mapper
 
+import com.food.ordering.system.domain.valueobject.PaymentOrderStatus
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel
 import com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel
 import com.food.ordering.system.kafka.order.avro.model.PaymentStatus
@@ -18,12 +19,12 @@ class PaymentMessagingDataMapper {
         val payment = paymentCompletedEvent.payment
         return PaymentResponseAvroModel(
             id = UUID.randomUUID(),
-            sagaId = UUID.fromString(""),
+            sagaId = UUID.randomUUID(),
             orderId = payment.orderId.value,
             customerId = payment.customerId.value,
             price = payment.price!!.amount,
             createdAt = payment.createdAt!!.toInstant(),
-            paymentStatus = PaymentStatus.valueOf(payment.paymentStatus!!.name),
+            paymentStatus = PaymentStatus.valueOf(payment.status!!.name),
             paymentId = payment.id.value,
             failureMessages = paymentCompletedEvent.failureMessages!!
         )
@@ -35,12 +36,12 @@ class PaymentMessagingDataMapper {
         val payment = paymentCancelledEvent.payment
         return PaymentResponseAvroModel(
             id = UUID.randomUUID(),
-            sagaId = UUID.fromString(""),
+            sagaId = UUID.randomUUID(),
             orderId = payment.orderId.value,
             customerId = payment.customerId.value,
             price = payment.price!!.amount,
             createdAt = payment.createdAt!!.toInstant(),
-            paymentStatus = PaymentStatus.valueOf(payment.paymentStatus!!.name),
+            paymentStatus = PaymentStatus.valueOf(payment.status!!.name),
             paymentId = payment.id.value,
             failureMessages = paymentCancelledEvent.failureMessages!!
         )
@@ -52,12 +53,12 @@ class PaymentMessagingDataMapper {
         val payment = paymentFailedEvent.payment
         return PaymentResponseAvroModel(
             id = UUID.randomUUID(),
-            sagaId = UUID.fromString(""),
+            sagaId = UUID.randomUUID(),
             orderId = payment.orderId.value,
             customerId = payment.customerId.value,
             price = payment.price!!.amount,
             createdAt = payment.createdAt!!.toInstant(),
-            paymentStatus = PaymentStatus.valueOf(payment.paymentStatus!!.name),
+            paymentStatus = PaymentStatus.valueOf(payment.status!!.name),
             paymentId = payment.id.value,
             failureMessages = paymentFailedEvent.failureMessages!!
         )
@@ -70,7 +71,7 @@ class PaymentMessagingDataMapper {
             id = paymentRequestAvroModel.id.toString(),
             sagaId = paymentRequestAvroModel.sagaId.toString(),
             createdAt = paymentRequestAvroModel.createdAt,
-            paymentOrderStatus = com.food.ordering.system.domain.valueobject.PaymentOrderStatus.valueOf(paymentRequestAvroModel.paymentOrderStatus.name),
+            paymentOrderStatus = PaymentOrderStatus.valueOf(paymentRequestAvroModel.paymentOrderStatus.name),
             orderId = paymentRequestAvroModel.orderId.toString(),
             customerId = paymentRequestAvroModel.customerId.toString(),
             price = paymentRequestAvroModel.price,

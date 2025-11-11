@@ -1,10 +1,5 @@
 plugins {
-    kotlin("jvm")
-    kotlin("plugin.spring")
     kotlin("kapt")
-
-    id("org.springframework.boot")
-    id("io.spring.dependency-management")
 }
 
 dependencies {

@@ -16,7 +16,7 @@ class PaymentDataAccessMapper {
             customerId = payment.customerId.value,
             orderId = payment.orderId.value,
             price = payment.price!!.amount,
-            paymentStatus = payment.paymentStatus!!,
+            status = payment.status!!,
             createdAt = payment.createdAt!!
         )
     }
@@ -26,7 +26,7 @@ class PaymentDataAccessMapper {
             orderId = OrderId(paymentEntity.orderId),
             customerId = CustomerId(paymentEntity.customerId),
             price = Money(paymentEntity.price),
-            paymentStatus = paymentEntity.paymentStatus,
+            status = paymentEntity.status,
             createdAt = paymentEntity.createdAt
         ).apply {
             this.id = PaymentId(paymentEntity.id)

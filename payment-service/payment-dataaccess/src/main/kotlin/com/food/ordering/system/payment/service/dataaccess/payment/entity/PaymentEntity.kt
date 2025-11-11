@@ -15,7 +15,7 @@ class PaymentEntity(
     var orderId: UUID,
     var price: BigDecimal,
     @Enumerated(EnumType.STRING)
-    var paymentStatus: PaymentStatus,
+    var status: PaymentStatus,
     var createdAt: ZonedDateTime,
 ) {
     override fun equals(other: Any?): Boolean {

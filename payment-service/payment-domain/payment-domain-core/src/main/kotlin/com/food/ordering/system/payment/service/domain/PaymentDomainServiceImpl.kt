@@ -119,7 +119,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
             )
         }
 
-        if (creditEntry.totalCreditAmount == totalCreditHistory.minus(totalDebitHistory)) {
+        if (creditEntry.totalCreditAmount != totalCreditHistory.minus(totalDebitHistory)) {
             logger.error(
                 "Credit entry total: {} is not equal to credit history total: {} for customer id: {}",
                 creditEntry.totalCreditAmount.amount,

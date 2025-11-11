@@ -15,7 +15,7 @@ class Payment(
     var customerId: CustomerId,
     var price: Money?,
 
-    var paymentStatus: PaymentStatus? = null,
+    var status: PaymentStatus? = null,
     var createdAt: ZonedDateTime? = null,
 ) : AggregateRoot<PaymentId>() {
 
@@ -31,6 +31,6 @@ class Payment(
     }
 
     fun updateStatus(paymentStatus: PaymentStatus) {
-        this.paymentStatus = paymentStatus
+        this.status = paymentStatus
     }
 }

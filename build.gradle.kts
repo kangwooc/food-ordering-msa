@@ -37,11 +37,11 @@ allprojects {
 
     configurations.all {
         resolutionStrategy {
-            force("org.jetbrains.kotlinx:kotlinx-serialization-core:1.7.3")
-            force("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3")
-            force("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-            force("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.7.3")
-            force("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.7.3")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.9.0")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.9.0")
+            force("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0")
         }
     }
 }
@@ -54,7 +54,7 @@ subprojects {
 
     the<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension>().apply {
         imports {
-            mavenBom("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.7.3")
+            mavenBom("org.jetbrains.kotlinx:kotlinx-serialization-bom:1.9.0")
         }
     }
 

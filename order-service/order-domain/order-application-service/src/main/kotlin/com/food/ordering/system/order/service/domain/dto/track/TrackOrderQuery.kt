@@ -6,5 +6,4 @@ import java.util.UUID
 data class TrackOrderQuery(
     @field:NotNull
     val orderTrackingId: UUID,
-
 )

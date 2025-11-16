@@ -14,11 +14,10 @@ class OrderRepositoryImpl(
     private val orderDataAccessMapper: OrderDataAccessMapper,
 ): OrderRepository {
     override fun save(order: Order): Order? {
-        return orderDataAccessMapper.orderEntityToOrder(
-            orderJpaRepository.save(
-                orderDataAccessMapper.orderToOrderEntity(order)
-            )
+        val orderEntity = orderJpaRepository.save(
+            orderDataAccessMapper.orderToOrderEntity(order)
         )
+        return orderDataAccessMapper.orderEntityToOrder(orderEntity)
     }
 
     override fun findByTrackingId(trackingId: com.food.ordering.system.order.service.domain.valueobject.TrackingId): Order? {

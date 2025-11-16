@@ -37,13 +37,13 @@ class PaymentRequestHelper(
         logger.info("Persisting payment request $paymentRequest")
         val payment = paymentDataMapper.paymentRequestModelToPayment(paymentRequest)
         val creditEntry = getCreditEntry(payment.customerId)
-        val creditHistories = getCreditHistory(payment.customerId)
+        val creditHistories = getCreditHistory(payment.customerId).toMutableList()
         val failureMessages = mutableListOf<String>()
 
         val paymentEvent = paymentDomainService.validateAndInitiatePayment(
             payment,
             creditEntry,
-            creditHistories.toMutableList(),
+            creditHistories,
             failureMessages,
             paymentCompletedMessagePublisher,
             paymentFailedMessagePublisher
@@ -52,7 +52,7 @@ class PaymentRequestHelper(
         paymentRepository.save(payment)
         if (failureMessages.isEmpty()) {
             creditEntryRepository.save(creditEntry)
-            creditHistoryRepository.save(creditHistories.get(creditHistories.size - 1))
+            creditHistoryRepository.save(creditHistories.last())
         }
         return paymentEvent
     }
@@ -64,13 +64,13 @@ class PaymentRequestHelper(
             ?: throw PaymentApplicationServiceException("Could not find payment for order id: ${paymentRequest.orderId}")
 
         val creditEntry = getCreditEntry(payment.customerId)
-        val creditHistories = getCreditHistory(payment.customerId)
+        val creditHistories = getCreditHistory(payment.customerId).toMutableList()
         val failureMessages = mutableListOf<String>()
 
         val paymentEvent = paymentDomainService.validateAndCancelPayment(
             payment,
             creditEntry,
-            creditHistories.toMutableList(),
+            creditHistories,
             failureMessages,
             paymentCancelledMessagePublisher,
             paymentFailedMessagePublisher
@@ -79,7 +79,7 @@ class PaymentRequestHelper(
         paymentRepository.save(payment)
         if (failureMessages.isEmpty()) {
             creditEntryRepository.save(creditEntry)
-            creditHistoryRepository.save(creditHistories.get(creditHistories.size - 1))
+            creditHistoryRepository.save(creditHistories.last())
         }
         return paymentEvent
     }

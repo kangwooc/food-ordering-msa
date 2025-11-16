@@ -21,7 +21,7 @@ class OrderEntity(
     @OneToOne(mappedBy = "order", cascade = [CascadeType.ALL])
     var address: OrderAddressEntity,
 
-    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
+    @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
     var items: MutableList<OrderItemEntity>,
 ) {
     override fun equals(other: Any?): Boolean {

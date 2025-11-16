@@ -1,13 +1,13 @@
 package com.food.ordering.system.order.service.dataaccess.order.mapper
 
-import com.food.ordering.system.domain.valueobject.CustomerId
-import com.food.ordering.system.domain.valueobject.OrderId
-import com.food.ordering.system.domain.valueobject.RestaurantId
+import com.food.ordering.system.domain.valueobject.*
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderAddressEntity
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderEntity
 import com.food.ordering.system.order.service.dataaccess.order.entity.OrderItemEntity
 import com.food.ordering.system.order.service.domain.entity.Order
 import com.food.ordering.system.order.service.domain.entity.OrderItem
+import com.food.ordering.system.order.service.domain.entity.Product
+import com.food.ordering.system.order.service.domain.valueobject.OrderItemId
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId
 import org.springframework.stereotype.Component
@@ -61,7 +61,7 @@ class OrderDataAccessMapper {
             customerId = CustomerId(orderEntity.customerId),
             restaurantId = RestaurantId(orderEntity.restaurantId),
             deliveryAddress = orderAddressEntityToStreetAddress(orderEntity.address),
-            price = com.food.ordering.system.domain.valueobject.Money(orderEntity.price),
+            price = Money(orderEntity.price),
             items = orderItemEntitiesToOrderItems(orderEntity.items),
             trackingId = TrackingId(orderEntity.trackingId),
             orderStatus = orderEntity.orderStatus,
@@ -71,7 +71,7 @@ class OrderDataAccessMapper {
         return order
     }
 
-    private fun orderAddressEntityToStreetAddress(addressEntity: OrderAddressEntity): com.food.ordering.system.order.service.domain.valueobject.StreetAddress {
+    private fun orderAddressEntityToStreetAddress(addressEntity: OrderAddressEntity):StreetAddress {
         return StreetAddress(
             id = addressEntity.id,
             street = addressEntity.street,
@@ -80,19 +80,20 @@ class OrderDataAccessMapper {
         )
     }
 
-    private fun orderItemEntitiesToOrderItems(itemEntities: List<OrderItemEntity>): List<com.food.ordering.system.order.service.domain.entity.OrderItem> {
-        val items = mutableListOf<com.food.ordering.system.order.service.domain.entity.OrderItem>()
+    private fun orderItemEntitiesToOrderItems(itemEntities: List<OrderItemEntity>): List<OrderItem> {
+        val items = mutableListOf<OrderItem>()
         itemEntities.forEach { itemEntity ->
-            val item = com.food.ordering.system.order.service.domain.entity.OrderItem(
+            val item = OrderItem(
                 orderId = OrderId(itemEntity.order!!.id),
-                product = com.food.ordering.system.order.service.domain.entity.Product(
-                    productId = com.food.ordering.system.domain.valueobject.ProductId(itemEntity.productId),
-                    price = com.food.ordering.system.domain.valueobject.Money(itemEntity.price)
+                product = Product(
+                    productId = ProductId(itemEntity.productId),
+                    price = Money(itemEntity.price)
                 ),
                 quantity = itemEntity.quantity,
-                price = com.food.ordering.system.domain.valueobject.Money(itemEntity.price),
-                subTotal = com.food.ordering.system.domain.valueobject.Money(itemEntity.subTotal)
+                price = Money(itemEntity.price),
+                subTotal = Money(itemEntity.subTotal)
             )
+            item.id = OrderItemId(itemEntity.id!!)
             items.add(item)
         }
         return items

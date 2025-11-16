@@ -41,6 +41,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
             payment.updateStatus(PaymentStatus.COMPLETED)
             return PaymentCompletedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)), paymentCompletedDomainEventPublisher)
         }
+
         logger.error("Payment initialization with id: {} is Failed", payment.id.value)
         payment.updateStatus(PaymentStatus.FAILED)
         return PaymentFailedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)), paymentFailedDomainEventPublisher)
@@ -108,7 +109,7 @@ class PaymentDomainServiceImpl : PaymentDomainService {
 
         val totalDebitHistory = getTotalHistoryAmount(creditHistories, TransactionType.DEBIT)
 
-        if (totalCreditHistory.isGreaterThan(totalDebitHistory)) {
+        if (totalDebitHistory.isGreaterThan(totalCreditHistory)) {
             logger.error(
                 "Customer with id: {} doesn't have credit according to credit history.",
                 creditEntry.customerId.value
